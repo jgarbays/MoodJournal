@@ -36972,11 +36972,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\MoodJournal\\MoodJournal.csproj",
+      "projectUniqueName": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\MoodJournal.csproj",
       "projectName": "MoodJournal",
-      "projectPath": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\MoodJournal\\MoodJournal.csproj",
+      "projectPath": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\MoodJournal.csproj",
       "packagesPath": "C:\\Users\\Cristina\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\MoodJournal\\obj\\",
+      "outputPath": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [

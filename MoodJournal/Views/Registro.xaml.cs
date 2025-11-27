@@ -90,6 +90,9 @@ namespace MoodJournal
         {
             // Vuelve a la página anterior (que asumimos es el Login o Bienvenida)
             await Navigation.PopAsync();
+
+            // Dejando un comentario para poder hacer commit
+
         }
     }
 }

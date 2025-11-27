@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\cristina\\source\\repos\\moodjournal\\moodjournal\\views\\home.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\views\\home.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\cristina\\source\\repos\\moodjournal\\moodjournal\\views\\entry.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\views\\entry.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\cristina\\source\\repos\\moodjournal\\moodjournal\\views\\ajustes.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\views\\ajustes.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\cristina\\source\\repos\\moodjournal\\moodjournal\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\cristina\\source\\repos\\moodjournal\\moodjournal\\views\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\views\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\cristina\\source\\repos\\moodjournal\\moodjournal\\views\\home.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\views\\home.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\cristina\\source\\repos\\moodjournal\\moodjournal\\models\\signupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,15 +42,37 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 5,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "entry.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\MoodJournal\\Views\\entry.xaml.cs",
+              "RelativeDocumentMoniker": "MoodJournal\\Views\\entry.xaml.cs",
+              "ToolTip": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\MoodJournal\\Views\\entry.xaml.cs",
+              "RelativeToolTip": "MoodJournal\\Views\\entry.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T21:58:39.889Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Ajustes.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\MoodJournal\\Views\\Ajustes.xaml.cs",
+              "RelativeDocumentMoniker": "MoodJournal\\Views\\Ajustes.xaml.cs",
+              "ToolTip": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\MoodJournal\\Views\\Ajustes.xaml.cs",
+              "RelativeToolTip": "MoodJournal\\Views\\Ajustes.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T21:58:38.803Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "MainPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\MoodJournal\\Views\\MainPage.xaml.cs",
               "RelativeDocumentMoniker": "MoodJournal\\Views\\MainPage.xaml.cs",
@@ -50,12 +80,11 @@
               "RelativeToolTip": "MoodJournal\\Views\\MainPage.xaml.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAgwBsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T21:46:44.167Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T21:46:44.167Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "SignUpViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\MoodJournal\\Models\\SignUpViewModel.cs",
               "RelativeDocumentMoniker": "MoodJournal\\Models\\SignUpViewModel.cs",
@@ -63,12 +92,11 @@
               "RelativeToolTip": "MoodJournal\\Models\\SignUpViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T21:44:54.314Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T21:44:54.314Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "MauiProgram.cs",
               "DocumentMoniker": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\MoodJournal\\MauiProgram.cs",
               "RelativeDocumentMoniker": "MoodJournal\\MauiProgram.cs",
@@ -81,7 +109,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Home.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\MoodJournal\\Views\\Home.xaml.cs",
               "RelativeDocumentMoniker": "MoodJournal\\Views\\Home.xaml.cs",
@@ -94,7 +122,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Registro.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\MoodJournal\\Views\\Registro.xaml.cs",
               "RelativeDocumentMoniker": "MoodJournal\\Views\\Registro.xaml.cs",
@@ -102,21 +130,23 @@
               "RelativeToolTip": "MoodJournal\\Views\\Registro.xaml.cs",
               "ViewState": "AgIAAE4AAAAAAAAAAAAowFkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T21:27:50.914Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T21:27:50.914Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "MoodJournal",
+              "DocumentIndex": 7,
+              "Title": "MoodJournal.csproj",
               "DocumentMoniker": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\MoodJournal\\MoodJournal.csproj",
               "RelativeDocumentMoniker": "MoodJournal\\MoodJournal.csproj",
               "ToolTip": "C:\\Users\\Cristina\\source\\repos\\MoodJournal\\MoodJournal\\MoodJournal.csproj",
               "RelativeToolTip": "MoodJournal\\MoodJournal.csproj",
               "ViewState": "AgIAAC0AAAAAAAAAAAAAAEMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-11-26T21:35:56.813Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T21:35:56.813Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             }
           ]
         }
