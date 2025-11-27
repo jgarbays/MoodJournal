@@ -1,0 +1,123 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="MoodJournal.Views.MainPage"
+             BackgroundColor="{StaticResource FondoClaroAmarillento}">
+               <!--BackgroundColor="{StaticResource FondoClaroAmarillento}"-->
+             
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, *">
+
+        <StackLayout x:Name="logo_container"
+                     Grid.Row="0"
+                     HorizontalOptions="Center"
+                     Margin="0, 64, 0, 0"
+                     Orientation="Vertical">
+
+            <Image Source="corazon_lapiz.png"
+                   WidthRequest="48"
+                   HeightRequest="48"
+                   Aspect="AspectFit"
+                   SemanticProperties.Description="moodjournal" />
+
+            <Label Text="moodjournal"
+                   FontSize="12"
+                   TextColor="{StaticResource TextoOscuro}"
+                   HorizontalTextAlignment="Center" />
+        </StackLayout>
+
+        <Label x:Name="title_text"
+               Grid.Row="1"
+               Text="iniciar sesión"
+               FontSize="30"
+               TextColor="{StaticResource TextoOscuro}"
+               FontAttributes="None"
+               
+               HorizontalOptions="Center"
+               Margin="0, 32, 0, 0" />
+
+        <StackLayout x:Name="form_container"
+                     Grid.Row="2"
+                     Orientation="Vertical"
+                     Margin="40, 40, 40, 0">
+
+            <Label Text="email / teléfono"
+                   FontSize="18"
+                   TextColor="{StaticResource TextoOscuro}"
+                   Margin="0, 0, 0, 4" />
+
+            <Entry x:Name="email_input"
+                   Placeholder="Ingrese aquí su texto..."
+                   HeightRequest="50"
+                   FontSize="16"
+                   Keyboard="Email"
+                   BackgroundColor="white"
+                   HorizontalOptions="FillAndExpand"
+                   Margin="0, 0, 0, 24">
+            </Entry>
+
+            <Label Text="contraseña"
+                   FontSize="18"
+                   TextColor="{StaticResource TextoOscuro}"
+                   Margin="0, 0, 0, 4" />
+
+            <Entry x:Name="password_input"
+                   Placeholder="Ingrese aquí su texto..."
+                   HeightRequest="50"
+                   FontSize="16"
+                   IsPassword="True"
+                   BackgroundColor="white"
+                   HorizontalOptions="FillAndExpand"
+                   Margin="0, 0, 0, 40">
+            </Entry>
+        </StackLayout>
+
+        <Button x:Name="login_button"
+                Grid.Row="3"
+                Text="iniciar sesión"
+                TextColor="White"
+                FontSize="18"
+                HeightRequest="50"
+                BackgroundColor="{StaticResource ColorPrincipalNaranja}"
+                HorizontalOptions="FillAndExpand"
+                Margin="40, 8, 40, 0"
+                Clicked="OnLoginButtonClicked">>
+            
+        </Button>
+
+        <Grid Grid.Row="4"
+      ColumnDefinitions="*, Auto"
+      Margin="40, 16, 40, 0">
+
+            <StackLayout Grid.Column="0"
+                 Orientation="Horizontal"
+                 HorizontalOptions="Start"
+                 VerticalOptions="Center">
+
+                <CheckBox x:Name="checkbox_remember"
+                  VerticalOptions="Center"
+                  Margin="0"/>
+                <Label Text="recordarme"
+               FontSize="14"
+               TextColor="Black"
+               VerticalOptions="Center"/>
+            </StackLayout>
+
+         
+        </Grid>
+       
+            <Label x:Name="register"
+   Grid.Row="5"
+   Text="registrarse"
+   FontSize="14"
+   TextColor="Black"
+   HorizontalOptions="End"
+   VerticalOptions="Center"
+   TextDecorations="Underline"
+   WidthRequest="116"/>
+        <Label.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnRegisterTapped" />
+        </Label.GestureRecognizers>
+
+    </Grid>
+
+   
+</ContentPage>

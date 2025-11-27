@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "327639494334",
+    "project_id": "moodjournal-e3dff",
+    "storage_bucket": "moodjournal-e3dff.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327639494334:android:bf6d4c789df9e589b978ef",
+        "android_client_info": {
+          "package_name": "com.garbayo.moodjournal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA521Rlu3USNVPRZMAVJY40bCQH6eNha8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,121 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MoodJournal.Registro"
+             BackgroundColor="{StaticResource FondoClaroAmarillento}">
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, *">
+
+        <StackLayout x:Name="logo_container"
+                     Grid.Row="0"
+                     HorizontalOptions="Center"
+                     Margin="0, 64, 0, 0"
+                     Orientation="Vertical">
+
+            <Image Source="corazon_lapiz.png"
+                   WidthRequest="48"
+                   HeightRequest="48"
+                   Aspect="AspectFit"
+                   SemanticProperties.Description="moodjournal" />
+
+            <Label Text="moodjournal"
+                   FontSize="12"
+                   TextColor="{StaticResource TextoOscuro}"
+                   HorizontalTextAlignment="Center"
+                   Margin="0, 0, 0, 4" />
+
+            <Label Text="registrarse"
+                   FontSize="14"
+                   TextColor="{StaticResource TextoOscuro}"
+                   HorizontalTextAlignment="Center" />
+        </StackLayout>
+
+        <Label x:Name="title_text"
+               Grid.Row="1"
+               Text="¡únete a &#x0a;moodjournal!"
+               FontSize="32"
+               TextColor="{StaticResource TextoOscuro}"
+               FontAttributes="None"
+               
+               HorizontalOptions="Center"
+               HorizontalTextAlignment="Center"
+               Margin="0, 16, 0, 0" />
+
+        <StackLayout x:Name="form_container"
+                     Grid.Row="2"
+                     Orientation="Vertical"
+                     Margin="40, 32, 40, 0">
+
+            <Label Text="nombre"
+                   FontSize="18"
+                   TextColor="{StaticResource TextoOscuro}"
+                   Margin="0, 0, 0, 4" />
+
+            <Entry x:Name="edit_text_name"
+                   Placeholder="Ingrese aquí su texto..."
+                   HeightRequest="50"
+                   FontSize="16"
+                   Keyboard="Text"
+                   BackgroundColor="white"
+                   HorizontalOptions="FillAndExpand"
+                   Margin="0, 0, 0, 24">
+            </Entry>
+
+            <Label Text="email"
+                   FontSize="18"
+                   TextColor="{StaticResource TextoOscuro}"
+                   Margin="0, 0, 0, 4" />
+
+            <Entry x:Name="edit_text_email"
+                   Placeholder="Ingrese aquí su texto..."
+                   BackgroundColor="white"
+                   
+                   HeightRequest="50"
+                   FontSize="16"
+                   Keyboard="Email"
+                   HorizontalOptions="FillAndExpand"
+                   Margin="0, 0, 0, 24">
+            </Entry>
+
+            <Label Text="contraseña"
+                   FontSize="18"
+                   TextColor="{StaticResource TextoOscuro}"
+                   Margin="0, 0, 0, 4" />
+
+            <Entry x:Name="edit_text_password"
+                   Placeholder="Ingrese aquí su texto..."
+                   HeightRequest="50"
+                   BackgroundColor="white"
+                   FontSize="16"
+                   IsPassword="True"
+                   HorizontalOptions="FillAndExpand"
+                   Margin="0, 0, 0, 40">
+            </Entry>
+        </StackLayout>
+
+        <Button x:Name="button_register"
+                Grid.Row="3"
+                Text="registrarse"
+                TextColor="White"
+                FontSize="18"
+                BackgroundColor="{StaticResource ColorPrincipalNaranja}"
+                HeightRequest="55"
+                HorizontalOptions="FillAndExpand"
+                Margin="40, 8, 40, 0"
+                Clicked="OnRegisterButtonClicked">
+        </Button>
+
+        <Label x:Name="text_already_account"
+               Grid.Row="4"
+               Text="ya tengo una cuenta"
+               FontSize="14"
+               TextColor="{StaticResource TextoOscuro}"
+               HorizontalOptions="End"
+               Margin="0, 16, 40, 0"
+               TextDecorations="Underline">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnAlreadyAccountTapped" />
+            </Label.GestureRecognizers>
+        </Label>
+        
+
+    </Grid>
+</ContentPage>

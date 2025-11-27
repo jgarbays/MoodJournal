@@ -1,0 +1,93 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MoodJournal.Views.Home"
+             BackgroundColor="{StaticResource FondoClaroAmarillento}">
+             
+    <ScrollView>
+        <StackLayout Orientation="Vertical"
+                     HorizontalOptions="Center"
+                     Padding="0, 64, 0, 16"
+                     Spacing="0">
+
+            <StackLayout Orientation="Vertical"
+                         HorizontalOptions="Center"
+                         Margin="0, 0, 0, 32">
+
+                <Image Source="corazon_lapiz.png"
+                       WidthRequest="48"
+                       HeightRequest="48"
+                       Aspect="AspectFit"
+                       SemanticProperties.Description="moodjournal" />
+
+                <Label Text="moodjournal"
+                       FontSize="12"
+                       TextColor="{StaticResource TextoOscuro}"
+                       HorizontalTextAlignment="Center" />
+            </StackLayout>
+
+            <Label x:Name="text_welcome"
+                   Text="bienvenida, &#x0a;Cristina!"
+                   FontSize="38"
+                  TextColor="{StaticResource ColorPrincipalRosa}"  FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   Margin="0, 0, 0, 40">
+            </Label>
+
+            <StackLayout HorizontalOptions="FillAndExpand"
+                         Spacing="16"
+                         Margin="40, 0, 40, 0">
+
+                <Button x:Name="button_nueva_entrada"
+                       BackgroundColor="{StaticResource ColorPrincipalNaranja}"
+                        Text="nueva entrada" 
+                        Clicked="OnNuevaEntradaClicked"
+                        />
+
+                <Button x:Name="button_historial"
+                       BackgroundColor="{StaticResource ColorPrincipalNaranja}"
+                        Text="historial" />
+
+                <Button x:Name="button_calendario"
+                      BackgroundColor="{StaticResource ColorPrincipalNaranja}"
+                        Text="calendario" 
+                         />
+
+                <Button x:Name="button_estadisticas"
+                       BackgroundColor="{StaticResource ColorPrincipalNaranja}"
+                        Text="estadísticas" />
+
+                <Button x:Name="button_perfil"
+                       BackgroundColor="{StaticResource ColorPrincipalNaranja}"
+                        Text="perfil" />
+
+                <Button x:Name="button_ajustes"
+                        BackgroundColor="{StaticResource ColorPrincipalNaranja}"
+                        Clicked="OnAjustesClicked"
+                        Text="ajustes" />
+            </StackLayout>
+
+            <Button x:Name="button_logout"
+                    Text="cerrar sesión"
+                    FontSize="12"
+                    TextColor="DarkSlateGray"
+                    HeightRequest="35"
+                    Padding="16, 0"
+                    BackgroundColor="Transparent"
+                    BorderWidth="0"
+                    Margin="0, 32, 0, 0"
+                    HorizontalOptions="Center" 
+                    Clicked="OnLogoutButtonClicked"/>
+            
+
+            <BoxView VerticalOptions="FillAndExpand" 
+                     HeightRequest="0" 
+                     Color="Transparent" />
+
+            <Label Text="2024, moodjournal inc."
+                   FontSize="12"
+                   TextColor="DarkSlateGrey"
+                   HorizontalOptions="Center" />
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

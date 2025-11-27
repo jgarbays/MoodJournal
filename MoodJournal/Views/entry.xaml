@@ -1,0 +1,158 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MoodJournal.Views.entry"
+             Title="entry"
+             BackgroundColor="{StaticResource FondoClaroAmarillento}">
+
+    <Grid RowDefinitions="Auto, *, Auto">
+
+        <StackLayout x:Name="back_button_container"
+                     Grid.Row="0"
+                     Orientation="Horizontal"
+                     VerticalOptions="Center"
+                     Padding="24, 24, 24, 8">
+
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnBackTapped" />
+            </StackLayout.GestureRecognizers>
+
+
+            <Label Text="⬅ atrás"
+                   FontSize="20"
+                   TextColor="{StaticResource ColorPrincipalRosa}"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   Margin="8, 0, 0, 0" />
+        </StackLayout>
+
+        <ScrollView Grid.Row="1"
+                    Margin="0, 0, 0, 16">
+
+            <StackLayout Orientation="Vertical"
+                         HorizontalOptions="FillAndExpand" 
+                         Padding="40, 64, 40, 0">
+
+                <StackLayout Orientation="Vertical"
+                             HorizontalOptions="Center"
+                             Margin="0, 0, 0, 32">
+
+                    <Image Source="corazon_lapiz.png"
+                           WidthRequest="48"
+                           HeightRequest="48"
+                           Aspect="AspectFit"
+                           SemanticProperties.Description="moodjournal" />
+
+                    <Label Text="moodjournal"
+                           FontSize="12"
+                           TextColor="{StaticResource ColorPrincipalRosa}"
+                           HorizontalTextAlignment="Center"
+                           Margin="0, 0, 0, 4"/>
+
+                    <Label Text="nueva entrada"
+                           FontSize="14"
+                           TextColor="{StaticResource TextoOscuroSuave}"
+                           HorizontalTextAlignment="Center" />
+                </StackLayout>
+
+                <Label Text="¿cómo te sientes &#x0a;hoy?"
+                       FontSize="32"
+                       TextColor="{StaticResource ColorPrincipalRosa}"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       Margin="0, 0, 0, 40" />
+
+                <Label Text="selecciona tu humor"
+                       FontSize="18"
+                       TextColor="{StaticResource TextoOscuro}"
+                       HorizontalOptions="Start"
+                       Margin="0, 0, 0, 4"/>
+
+                <StackLayout Orientation="Horizontal"
+             HorizontalOptions="Center"
+             Spacing="8"  Margin="0, 0, 0, 24">
+
+                    <StackLayout Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                        <Label Text="🙂" FontSize="36" HorizontalOptions="Center" />
+                        <Label Text="contento" FontSize="12" TextColor="{StaticResource TextoOscuro}" HorizontalOptions="Center" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                        <Label Text="😄" FontSize="36" HorizontalOptions="Center" />
+                        <Label Text="feliz" FontSize="12" TextColor="{StaticResource TextoOscuro}" HorizontalOptions="Center" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                        <Label Text="😐" FontSize="36" HorizontalOptions="Center" />
+                        <Label Text="meh" FontSize="12" TextColor="{StaticResource TextoOscuro}" HorizontalOptions="Center" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                        <Label Text="😨" FontSize="36" HorizontalOptions="Center" />
+                        <Label Text="nervioso" FontSize="12" TextColor="{StaticResource TextoOscuro}" HorizontalOptions="Center" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                        <Label Text="😡" FontSize="36" HorizontalOptions="Center" />
+                        <Label Text="enfadado" FontSize="12" TextColor="{StaticResource TextoOscuro}" HorizontalOptions="Center" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                        <Label Text="😟" FontSize="36" HorizontalOptions="Center" />
+                        <Label Text="triste" FontSize="12" TextColor="{StaticResource TextoOscuro}" HorizontalOptions="Center" />
+                    </StackLayout>
+
+                </StackLayout>
+
+
+                <Label Text="tu entrada de hoy"
+                       FontSize="18"
+                       TextColor="{StaticResource TextoOscuro}"
+                       HorizontalOptions="Start"
+                       Margin="0, 0, 0, 4"/>
+
+                <Border Stroke="{StaticResource ColorPrincipalRosa}" 
+                        StrokeThickness="2" 
+                        StrokeShape="RoundRectangle 10"  
+                        Padding="0" 
+                        HeightRequest="300"
+                        HorizontalOptions="FillAndExpand"
+                        Margin="0, 0, 0, 24">
+                    <Editor x:Name="edit_text_journal_entry"
+                            Placeholder="Escribe sobre tu día aquí..."
+                            FontSize="16"
+                            BackgroundColor="White"
+                            Margin="16"
+                            VerticalOptions="FillAndExpand"
+                            Keyboard="Text" />
+                </Border>
+
+                <Button x:Name="button_add_photo"
+                        Text="+ añadir foto"
+                        FontSize="14"
+                        TextColor="{StaticResource ColorPrincipalRosa}"
+                        HeightRequest="40"
+                        BackgroundColor="Transparent"
+                        BorderWidth="0"
+                        HorizontalOptions="End" />
+
+            </StackLayout>
+        </ScrollView>
+
+        <StackLayout x:Name="button_guardar_container"
+                     Grid.Row="2"
+                     Orientation="Vertical"
+                     Padding="40, 16"
+                     BackgroundColor="{StaticResource FondoClaroAmarillento}">
+
+            <Button x:Name="button_guardar"
+                    Text="guardar entrada"
+                    FontSize="18"
+                    TextColor="White"
+                    BackgroundColor="{StaticResource ColorPrincipalNaranja}"
+                    HeightRequest="55"
+                    HorizontalOptions="FillAndExpand"
+                    />
+        </StackLayout>
+
+    </Grid>
+</ContentPage>
