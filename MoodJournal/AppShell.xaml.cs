@@ -16,6 +16,9 @@ namespace MoodJournal
             // 1. Registrar la ruta de la página Registro
             // Usamos nameof(Registro) para mayor seguridad.
             Routing.RegisterRoute(nameof(Registro), typeof(Registro));
+            Routing.RegisterRoute("Home", typeof(Home));
+            Routing.RegisterRoute("Ajustes", typeof(Ajustes));
+            Routing.RegisterRoute("entry", typeof(entry));
 
             // 2. Opcional: Registrar la ruta de la página principal (si aún no lo está)
             // Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));

@@ -1,7 +1,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MoodJournal.Registro"
-             BackgroundColor="{StaticResource FondoClaroAmarillento}">
+             BackgroundColor="{DynamicResource FondoClaroAmarillento}">
+
     <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, *">
 
         <StackLayout x:Name="logo_container"
@@ -13,18 +14,17 @@
             <Image Source="corazon_lapiz.png"
                    WidthRequest="48"
                    HeightRequest="48"
-                   Aspect="AspectFit"
-                   SemanticProperties.Description="moodjournal" />
+                   Aspect="AspectFit" />
 
             <Label Text="moodjournal"
                    FontSize="12"
-                   TextColor="{StaticResource TextoOscuro}"
+                   TextColor="{DynamicResource TextoOscuro}"
                    HorizontalTextAlignment="Center"
                    Margin="0, 0, 0, 4" />
 
             <Label Text="registrarse"
                    FontSize="14"
-                   TextColor="{StaticResource TextoOscuro}"
+                   TextColor="{DynamicResource TextoOscuro}"
                    HorizontalTextAlignment="Center" />
         </StackLayout>
 
@@ -32,9 +32,7 @@
                Grid.Row="1"
                Text="¡únete a &#x0a;moodjournal!"
                FontSize="32"
-               TextColor="{StaticResource TextoOscuro}"
-               FontAttributes="None"
-               
+               TextColor="{DynamicResource TextoOscuro}"
                HorizontalOptions="Center"
                HorizontalTextAlignment="Center"
                Margin="0, 16, 0, 0" />
@@ -46,49 +44,38 @@
 
             <Label Text="nombre"
                    FontSize="18"
-                   TextColor="{StaticResource TextoOscuro}"
+                   TextColor="{DynamicResource TextoOscuro}"
                    Margin="0, 0, 0, 4" />
 
             <Entry x:Name="edit_text_name"
-                   Placeholder="Ingrese aquí su texto..."
+                   Placeholder="Tu nombre"
                    HeightRequest="50"
-                   FontSize="16"
-                   Keyboard="Text"
-                   BackgroundColor="white"
-                   HorizontalOptions="FillAndExpand"
-                   Margin="0, 0, 0, 24">
-            </Entry>
+                   BackgroundColor="White"
+                   Margin="0, 0, 0, 24" />
 
             <Label Text="email"
                    FontSize="18"
-                   TextColor="{StaticResource TextoOscuro}"
+                   TextColor="{DynamicResource TextoOscuro}"
                    Margin="0, 0, 0, 4" />
 
             <Entry x:Name="edit_text_email"
-                   Placeholder="Ingrese aquí su texto..."
-                   BackgroundColor="white"
-                   
-                   HeightRequest="50"
-                   FontSize="16"
+                   Placeholder="correo@ejemplo.com"
                    Keyboard="Email"
-                   HorizontalOptions="FillAndExpand"
-                   Margin="0, 0, 0, 24">
-            </Entry>
+                   BackgroundColor="White"
+                   HeightRequest="50"
+                   Margin="0, 0, 0, 24" />
 
             <Label Text="contraseña"
                    FontSize="18"
-                   TextColor="{StaticResource TextoOscuro}"
+                   TextColor="{DynamicResource TextoOscuro}"
                    Margin="0, 0, 0, 4" />
 
             <Entry x:Name="edit_text_password"
-                   Placeholder="Ingrese aquí su texto..."
-                   HeightRequest="50"
-                   BackgroundColor="white"
-                   FontSize="16"
+                   Placeholder="Mínimo 6 caracteres"
                    IsPassword="True"
-                   HorizontalOptions="FillAndExpand"
-                   Margin="0, 0, 0, 40">
-            </Entry>
+                   BackgroundColor="White"
+                   HeightRequest="50"
+                   Margin="0, 0, 0, 40" />
         </StackLayout>
 
         <Button x:Name="button_register"
@@ -96,18 +83,17 @@
                 Text="registrarse"
                 TextColor="White"
                 FontSize="18"
-                BackgroundColor="{StaticResource ColorPrincipalNaranja}"
+                BackgroundColor="{DynamicResource ColorPrincipalNaranja}"
+                CornerRadius="20"
                 HeightRequest="55"
-                HorizontalOptions="FillAndExpand"
                 Margin="40, 8, 40, 0"
-                Clicked="OnRegisterButtonClicked">
-        </Button>
+                Clicked="OnRegisterButtonClicked" />
 
         <Label x:Name="text_already_account"
                Grid.Row="4"
                Text="ya tengo una cuenta"
                FontSize="14"
-               TextColor="{StaticResource TextoOscuro}"
+               TextColor="{DynamicResource TextoOscuro}"
                HorizontalOptions="End"
                Margin="0, 16, 40, 0"
                TextDecorations="Underline">
@@ -115,7 +101,5 @@
                 <TapGestureRecognizer Tapped="OnAlreadyAccountTapped" />
             </Label.GestureRecognizers>
         </Label>
-        
-
     </Grid>
 </ContentPage>

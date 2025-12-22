@@ -44,6 +44,9 @@ namespace MoodJournal
             // 3. REGISTRO de Páginas para Inyección de Dependencias
             // Esto permite que el constructor de la página Registro reciba las instancias de Firebase.
             builder.Services.AddTransient<Registro>();
+            builder.Services.AddTransient<MoodJournal.Views.Home>();
+            builder.Services.AddTransient<MoodJournal.Views.MainPage>();
+
 
             // ==========================================================
 

@@ -1,109 +1,205 @@
+ï»¿using Firebase.Auth;
+using Google.Cloud.Firestore;
 using System.ComponentModel;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Storage;
-
+using Plugin.LocalNotification;
 
 namespace MoodJournal.Views;
 
 public partial class Ajustes : ContentPage
 {
+    private readonly FirebaseAuthClient _authClient;
+    private readonly FirestoreDb _firestoreDb;
 
-    private const string ReminderTimeKey = "DailyReminderTime";
-    private TimeSpan selectedReminderTime = new TimeSpan(19, 30, 0);
-
-    public Ajustes()
+    public Ajustes(FirebaseAuthClient authClient, FirestoreDb firestoreDb)
     {
         InitializeComponent();
-        LoadReminderTime(); // Agregado LoadReminderTime para que se ejecute al inicio
-        // UpdateReminderTimeDisplay(selectedReminderTime); // Ya no se puede llamar directamente
+        _authClient = authClient;
+        _firestoreDb = firestoreDb;
+
+        // Crea un temporizador que se ejecuta cada 1 minuto (60 segundos)
+        IDispatcherTimer timer = Dispatcher.CreateTimer();
+        timer.Interval = TimeSpan.FromSeconds(60);
+        timer.Tick += (s, e) => ActualizarFechaSistema();
+        timer.Start();
+        // Inicializamos el texto del botÃ³n con la hora actual o una guardada
+        CargarPreferenciasRecordatorio();
     }
 
-    // Método para regresar al menú
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        ActualizarFechaSistema();
+    }
+
+    // 1. VOLVER ATRÃS
     private async void OnBackTapped(object sender, TappedEventArgs e)
     {
-        await Navigation.PopAsync();
+        // ".." le dice a Shell que vuelva a la pantalla anterior
+        await Shell.Current.GoToAsync("..");
     }
 
-    // Método auxiliar para formatear y mostrar la hora en el Label
-    private void UpdateReminderTimeDisplay(TimeSpan time)
+    private void ActualizarFechaSistema()
     {
-        // NO PUEDES ACCEDER AL LABEL (ReminderTimeLabel) AHORA.
-        // Lo dejaremos vacío hasta que se resuelva el error.
-        // ReminderTimeLabel.Text = DateTime.Today.Add(time).ToString("hh:mm tt");
+        // Obtenemos la fecha y hora actual del sistema
+        DateTime ahora = DateTime.Now;
+
+        // La formateamos para que coincida con tu diseÃ±o: "12 feb | 19:15"
+        // "dd MMM" -> dÃ­a y mes abreviado
+        // "HH:mm" -> hora y minutos
+        string fechaFormateada = ahora.ToString("dd MMM | HH:mm").ToLower();
+
+        // Lo asignamos a la etiqueta
+        CurrentTimeLabel.Text = fechaFormateada;
     }
 
-    // Método de carga (No usa referencias UI, está bien)
-    private void LoadReminderTime()
+    private void CargarPreferenciasRecordatorio()
     {
-        string savedTime = Preferences.Get(ReminderTimeKey, "19:30:00");
+        // Recuperamos la hora guardada o ponemos 20:00 por defecto
+        string horaGuardada = Preferences.Default.Get("reminder_time", "20:00");
+        ReminderTimeLabel.Text = horaGuardada;
+        HiddenTimePicker.Time = TimeSpan.TryParse(Preferences.Default.Get("reminder_time", "20:00"), out var ts) ? ts : new TimeSpan(20, 0, 0);
 
-        if (TimeSpan.TryParse(savedTime, out TimeSpan time))
+        // TambiÃ©n cargamos el estado del Switch
+        ReminderSwitch.IsToggled = Preferences.Default.Get("reminder_enabled", true);
+    }
+
+   
+
+    // 2. ABRIR EL SELECTOR DE HORA
+    private void OnReminderTimeTapped(object sender, EventArgs e)
+    {
+        HiddenTimePicker.IsVisible = true;
+        // Al hacer Focus, se abre el selector nativo del mÃ³vil
+        HiddenTimePicker.Focus();
+    }
+
+    // 3. ACTUALIZAR TEXTO CUANDO CAMBIA LA HORA
+    private async void OnTimePickerPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == TimePicker.TimeProperty.PropertyName)
         {
-            selectedReminderTime = time;
+            var timePicker = sender as TimePicker;
+            if (timePicker == null) return; // seguridad
+
+            var time = timePicker.Time;
+            ReminderTimeLabel.Text = time.ToString(@"hh\:mm");
+            Preferences.Default.Set("reminder_time", ReminderTimeLabel.Text);
+
+            if (ReminderSwitch.IsToggled)
+                await ProgramarRecordatorio(time);
+
+            timePicker.IsVisible = false;
+        }
+    }
+
+
+
+    // 4. ACTIVAR/DESACTIVAR RECORDATORIO
+    private async void OnReminderToggled(object sender, ToggledEventArgs e)
+    {
+        Preferences.Default.Set("reminder_enabled", e.Value);
+
+        if (e.Value)
+        {
+            // Si el TimePicker no ha sido usado, usamos la hora guardada
+            string horaGuardada = Preferences.Default.Get("reminder_time", "20:00");
+            if (TimeSpan.TryParse(horaGuardada, out var time))
+            {
+                await ProgramarRecordatorio(time);
+            }
         }
         else
         {
-            selectedReminderTime = new TimeSpan(19, 30, 0);
+            LocalNotificationCenter.Current.Cancel(100);
         }
     }
 
-
-    // 1. Método llamado al tocar la etiqueta de la hora (Label)
-    private async void OnReminderTimeTapped(object sender, EventArgs e)
+    private async Task ProgramarRecordatorio(TimeSpan hora)
     {
-        HiddenTimePicker.Time = selectedReminderTime;
-
-        // Introduce un pequeño retraso ANTES del foco
-        await Task.Delay(50);
-
-        // Forzar el foco de nuevo
-        Dispatcher.Dispatch(() =>
+        var center = LocalNotificationCenter.Current;
+        if (center == null)
         {
-            HiddenTimePicker.Focus();
-        });
+            await DisplayAlert("Error", "Notificaciones locales no disponibles.", "OK");
+            return;
+        }
 
+        var notification = new NotificationRequest
+        {
+            NotificationId = 100, // ID fijo para poder reemplazarla
+            Title = "MoodJournal ðŸ’–",
+            Description = "Es hora de registrar cÃ³mo te sientes hoy",
+            Schedule = new NotificationRequestSchedule
+            {
+                NotifyTime = DateTime.Today.Add(hora) < DateTime.Now
+                    ? DateTime.Today.AddDays(1).Add(hora)
+                    : DateTime.Today.Add(hora),
+                RepeatType = NotificationRepeat.Daily
+            }
+        };
 
+        await LocalNotificationCenter.Current.Show(notification);
     }
 
 
-    // 2. Método llamado cuando el usuario selecciona una hora en el diálogo y pulsa OK
-    private void OnTimePickerPropertyChanged(object sender, PropertyChangedEventArgs e)
+    // 5. BORRAR CUENTA (AcciÃ³n crÃ­tica)
+    private async void OnBorrarCuentaClicked(object sender, EventArgs e)
     {
-        // El único control accesible aquí es 'sender', pero el resto falla.
-        if (e.PropertyName == nameof(TimePicker.Time))
+        // 1. PRIMERA CONFIRMACIÃ“N
+        bool confirm = await DisplayAlert("âš ï¸ AcciÃ³n CrÃ­tica",
+            "Â¿EstÃ¡s seguro de que quieres borrar tu cuenta? Todos tus datos se perderÃ¡n para siempre.",
+            "SÃ­, continuar", "Cancelar");
+
+        if (!confirm) return;
+
+        // 2. PEDIR CONTRASEÃ‘A PARA CONFIRMAR
+        // Usamos DisplayPromptAsync para mostrar un cuadro de texto
+        string passwordConfirm = await DisplayPromptAsync("Confirmar Identidad",
+            "Por favor, introduce tu contraseÃ±a para confirmar el borrado:",
+            accept: "BORRAR DEFINITIVAMENTE",
+            cancel: "Cancelar",
+            placeholder: "Tu contraseÃ±a",
+            keyboard: Keyboard.Text);
+
+        if (string.IsNullOrWhiteSpace(passwordConfirm)) return;
+
+        try
         {
-            TimePicker picker = (TimePicker)sender;
-            TimeSpan nuevaHora = picker.Time;
-
-            // 2. Comprobamos si la hora realmente cambió (para evitar ciclos)
-            if (nuevaHora != selectedReminderTime)
+            var user = _authClient.User;
+            if (user != null)
             {
-                selectedReminderTime = nuevaHora;
-                // UpdateReminderTimeDisplay(nuevaHora); // NO ACCESIBLE
+                // 3. RE-AUTENTICACIÃ“N (Paso de seguridad de Firebase)
+                // Intentamos hacer un "mini-login" interno para validar la contraseÃ±a
+                await _authClient.SignInWithEmailAndPasswordAsync(user.Info.Email, passwordConfirm);
 
-                // 3. Reprogramamos si el Switch está encendido
-                // if (ReminderSwitch.IsToggled) // NO ACCESIBLE
-                // {
-                Preferences.Set(ReminderTimeKey, nuevaHora.ToString()); // ¡Guardar si funciona!
-                                                                        //     DisplayAlert("Hora Actualizada", "Recordatorio actualizado.", "OK");
-                                                                        // }
+                // 4. BORRAR DATOS DE FIRESTORE
+                await _firestoreDb.Collection("usuarios").Document(user.Uid).DeleteAsync();
+
+                // 5. BORRAR EL USUARIO DE AUTH
+                await user.DeleteAsync();
+
+                await DisplayAlert("Cuenta eliminada", "Tu cuenta y tus datos han sido eliminados.", "OK");
+
+                // 6. LIMPIAR PREFERENCIAS Y VOLVER AL INICIO
+                Preferences.Default.Clear();
+                SecureStorage.Default.RemoveAll();
+                await Shell.Current.GoToAsync("//MainPage");
             }
         }
-    }
-
-    // 3. Lógica del Switch para activar/desactivar notificaciones
-    private void OnReminderToggled(object sender, ToggledEventArgs e)
-    {
-        // NO PUEDES ACCEDER AL SWITCH (ReminderSwitch) AHORA, ¡pero este evento es disparado por él!
-        if (e.Value) // True: Activar
+        catch (FirebaseAuthException authEx)
         {
-            // TODO: Llamar a ScheduleDailyNotification(selectedReminderTime);
-            // DisplayAlert("Recordatorio", $"Recordatorio diario activado a las {ReminderTimeLabel.Text}.", "OK"); // NO ACCESIBLE
+            // Si la contraseÃ±a introducida en el prompt es incorrecta
+            if (authEx.Reason == AuthErrorReason.WrongPassword)
+            {
+                await DisplayAlert("Error", "La contraseÃ±a no es correcta. No se pudo borrar la cuenta.", "Aceptar");
+            }
+            else
+            {
+                await DisplayAlert("Error", "Error de autenticaciÃ³n: " + authEx.Message, "OK");
+            }
         }
-        else // False: Desactivar
+        catch (Exception ex)
         {
-            // TODO: Llamar a CancelScheduledNotification(); 
-            // DisplayAlert("Recordatorio", "Recordatorio diario desactivado.", "OK");
+            await DisplayAlert("Error", "No se pudo completar la acciÃ³n: " + ex.Message, "OK");
         }
     }
 }

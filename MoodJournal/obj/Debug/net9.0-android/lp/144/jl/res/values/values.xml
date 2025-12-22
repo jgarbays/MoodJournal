@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="NavAction">
-        <attr name="android:id"/>
-        <attr format="reference" name="destination"/>
-        <attr format="boolean" name="launchSingleTop"/>
-        <attr format="boolean" name="restoreState"/>
-        <attr format="reference" name="popUpTo"/>
-        <attr format="boolean" name="popUpToInclusive"/>
-        <attr format="boolean" name="popUpToSaveState"/>
-        <attr format="reference" name="enterAnim"/>
-        <attr format="reference" name="exitAnim"/>
-        <attr format="reference" name="popEnterAnim"/>
-        <attr format="reference" name="popExitAnim"/>
-    </declare-styleable>
-    <declare-styleable name="NavArgument">
-        <attr name="android:name"/>
-        <attr name="android:defaultValue"/>
-        <attr format="boolean" name="nullable"/>
-        <attr format="string" name="argType"/>
-    </declare-styleable>
-    <declare-styleable name="NavDeepLink">
-        <attr format="string" name="uri"/>
-        <attr format="string" name="action"/>
-        <attr format="string" name="mimeType"/>
-        <attr name="android:autoVerify"/>
-    </declare-styleable>
-    <declare-styleable name="NavGraphNavigator">
-        <attr format="reference" name="startDestination"/>
-    </declare-styleable>
-    <declare-styleable name="Navigator">
-        <attr name="android:id"/>
-        <attr format="string" name="route"/>
-        <attr name="android:label"/>
+    <attr format="reference" name="recyclerViewStyle"/>
+    <dimen name="fastscroll_default_thickness">8dp</dimen>
+    <dimen name="fastscroll_margin">0dp</dimen>
+    <dimen name="fastscroll_minimum_range">50dp</dimen>
+    <dimen name="item_touch_helper_max_drag_scroll_per_frame">20dp</dimen>
+    <dimen name="item_touch_helper_swipe_escape_max_velocity">800dp</dimen>
+    <dimen name="item_touch_helper_swipe_escape_velocity">120dp</dimen>
+    <item name="item_touch_helper_previous_elevation" type="id"/>
+    <declare-styleable name="RecyclerView">
+        
+        <attr format="string" name="layoutManager"/>
+
+        
+        
+        
+        <eat-comment/>
+
+        <attr name="android:orientation"/>
+        <attr name="android:descendantFocusability"/>
+        <attr name="android:clipToPadding"/>
+        <attr format="integer" name="spanCount"/>
+        <attr format="boolean" name="reverseLayout"/>
+        <attr format="boolean" name="stackFromEnd"/>
+        <attr format="boolean" name="fastScrollEnabled"/>
+        <attr format="reference" name="fastScrollVerticalThumbDrawable"/>
+        <attr format="reference" name="fastScrollVerticalTrackDrawable"/>
+        <attr format="reference" name="fastScrollHorizontalThumbDrawable"/>
+        <attr format="reference" name="fastScrollHorizontalTrackDrawable"/>
     </declare-styleable>
 </resources>

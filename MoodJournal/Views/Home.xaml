@@ -26,7 +26,7 @@
             </StackLayout>
 
             <Label x:Name="text_welcome"
-                   Text="bienvenida, &#x0a;Cristina!"
+                   Text="hola!"
                    FontSize="38"
                   TextColor="{StaticResource ColorPrincipalRosa}"  FontAttributes="Bold"
                    HorizontalTextAlignment="Center"

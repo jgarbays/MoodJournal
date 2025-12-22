@@ -9,6 +9,6 @@ public partial class entry : ContentPage
 
 	private async void OnBackTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new Home());
+        await Shell.Current.GoToAsync("//Home");
     }
 }

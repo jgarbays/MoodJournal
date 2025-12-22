@@ -65,12 +65,14 @@
 		<PackageReference Include="Google.Cloud.Firestore" Version="3.13.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.8" />
+		<PackageReference Include="Plugin.LocalNotification" Version="13.0.0" />
+
 	</ItemGroup>
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net8.0-android' ">
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net9.0-android' ">
 		<GoogleServicesJson Include="Platforms\Android\google-services.json" />
 
-		<PackageReference Include="Xamarin.GooglePlayServices.Basement" Version="118.2.0.1" />
+		<PackageReference Include="Xamarin.GooglePlayServices.Basement" Version="118.7.1.1" />
 		<PackageReference Include="Xamarin.Firebase.Iid" Version="121.1.0.1" />
 	</ItemGroup>
 

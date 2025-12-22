@@ -92,6 +92,18 @@
               "target": "Package",
               "version": "[9.0.11, )",
               "autoReferenced": true
+            },
+            "Plugin.LocalNotification": {
+              "target": "Package",
+              "version": "[13.0.0, )"
+            },
+            "Xamarin.Firebase.Iid": {
+              "target": "Package",
+              "version": "[121.1.0.1, )"
+            },
+            "Xamarin.GooglePlayServices.Basement": {
+              "target": "Package",
+              "version": "[118.7.1.1, )"
             }
           },
           "imports": [
@@ -143,6 +155,10 @@
               "target": "Package",
               "version": "[9.0.11, )",
               "autoReferenced": true
+            },
+            "Plugin.LocalNotification": {
+              "target": "Package",
+              "version": "[13.0.0, )"
             }
           },
           "imports": [
@@ -194,6 +210,10 @@
               "target": "Package",
               "version": "[9.0.11, )",
               "autoReferenced": true
+            },
+            "Plugin.LocalNotification": {
+              "target": "Package",
+              "version": "[13.0.0, )"
             }
           },
           "imports": [
@@ -240,6 +260,10 @@
             "Microsoft.Maui.Controls": {
               "target": "Package",
               "version": "[9.0.111, )"
+            },
+            "Plugin.LocalNotification": {
+              "target": "Package",
+              "version": "[13.0.0, )"
             }
           },
           "imports": [

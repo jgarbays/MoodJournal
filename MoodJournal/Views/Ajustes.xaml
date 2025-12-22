@@ -56,15 +56,10 @@
         />
                 </StackLayout>
 
-                <TimePicker x:Name="HiddenTimePicker"
-            x:FieldModifier="public"
-            Opacity="0"                 WidthRequest="10" 
-            HeightRequest="10" 
-            Format="hh:mm tt"
-            PropertyChanged="OnTimePickerPropertyChanged" 
-            Grid.ColumnSpan="3"
-            HorizontalOptions="Start"
-            VerticalOptions="Start" />
+                <TimePicker
+    x:Name="HiddenTimePicker"
+    IsVisible="False"
+    PropertyChanged="OnTimePickerPropertyChanged" />
 
                 <Switch Grid.Column="2" 
                         IsToggled="True" 
@@ -75,13 +70,20 @@
                         OnColor="{StaticResource ColorPrincipalRosa}"/>
             </Grid>
 
-            <Grid ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center">
+            <Grid ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center"
+                  >
                 <Label Grid.Column="0" Text="📅" FontSize="24" VerticalOptions="Center" Margin="0, 0, 15, 0"/>
                 <StackLayout Grid.Column="1">
                     <Label Text="fecha y hora" FontSize="18" TextColor="{StaticResource TextoOscuro}"/>
-                    <Label Text="12 feb | 19:15 pm" FontSize="14" TextColor="{StaticResource TextoOscuroSuave}"/>
-                   
+
+                    <Label x:Name="CurrentTimeLabel" 
+           Text="cargando..." 
+           FontSize="14" 
+           TextColor="{StaticResource TextoOscuroSuave}"/>
+
                 </StackLayout>
+              
+                
             </Grid>
 
             <Button Text="borrar cuenta"
@@ -92,7 +94,8 @@
                     CornerRadius="25"
                     Padding="30, 0"
                     BackgroundColor="{StaticResource ColorPrincipalRosa}"
-                    Margin="0, 50, 0, 0" />
+                    Margin="0, 50, 0, 0"
+                    Clicked="OnBorrarCuentaClicked"/>
 
         </StackLayout>
     </Grid>
