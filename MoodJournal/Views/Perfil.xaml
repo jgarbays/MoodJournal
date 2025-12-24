@@ -1,0 +1,91 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MoodJournal.Views.Perfil"
+             BackgroundColor="#F7F1D1">
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
+                <Label Text="←" FontSize="24" TextColor="#E57373" VerticalOptions="Center"/>
+                <Label Text="atrás" FontSize="20" TextColor="#E57373" VerticalOptions="Center"/>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped"/>
+                </HorizontalStackLayout.GestureRecognizers>
+            </HorizontalStackLayout>
+
+            <Label Text="mi perfil" 
+                   FontSize="28" 
+                   TextColor="#8D4925" 
+                   HorizontalOptions="Center" 
+                   FontAttributes="Bold"
+                   Margin="0,10,0,10"/>
+
+            <Grid HorizontalOptions="Center" HeightRequest="160" WidthRequest="160">
+                <Frame CornerRadius="80" 
+                       Padding="0" 
+                       IsClippedToBounds="True" 
+                       HasShadow="False"
+                       BorderColor="Transparent">
+                    <Image x:Name="ProfileImage"
+                           Source="profile_picture.png" 
+                           Aspect="AspectFill"
+                           HeightRequest="160" 
+                           WidthRequest="160"/>
+                </Frame>
+
+                <Button Text="✎"
+                        FontSize="18"
+                        BackgroundColor="#BC5D4E"
+                        TextColor="White"
+                        CornerRadius="20"
+                        HeightRequest="40"
+                        WidthRequest="40"
+                        HorizontalOptions="End"
+                        VerticalOptions="End"
+                        Margin="0,0,5,5"
+                        Clicked="OnCambiarFotoClicked"/>
+            </Grid>
+
+            <Label x:Name="NombreLabel"
+                   Text="Cargando..." 
+                   FontSize="24" 
+                   TextColor="#BC5D4E" 
+                   HorizontalOptions="Center" 
+                   FontAttributes="Bold"/>
+
+            <VerticalStackLayout Spacing="5" Margin="0,20,0,0">
+                <Label Text="fecha de nacimiento" TextColor="#E57373" FontSize="16"/>
+                <Label x:Name="FechaNacimientoLabel" 
+                       Text="--" 
+                       FontSize="18" 
+                       TextColor="#333333"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="5">
+                <Label Text="email" TextColor="#E57373" FontSize="16"/>
+                <Label x:Name="EmailLabel" 
+                       Text="--" 
+                       FontSize="18" 
+                       TextColor="#333333"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="5">
+                <Label Text="teléfono" TextColor="#E57373" FontSize="16"/>
+                <Label x:Name="TelefonoLabel" 
+                       Text="--" 
+                       FontSize="18" 
+                       TextColor="#333333"/>
+            </VerticalStackLayout>
+
+            <Button Text="editar"
+                    BackgroundColor="#BC5D4E"
+                    TextColor="White"
+                    CornerRadius="15"
+                    WidthRequest="200"
+                    HorizontalOptions="Center"
+                    Margin="0,30,0,0"
+                    Clicked="OnEditarClicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

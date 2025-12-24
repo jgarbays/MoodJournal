@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using Firebase.Auth;
 using Firebase.Auth.Providers;
-using Google.Cloud.Firestore; // <-- AÑADIDO: Para la base de datos Firestore
-using MoodJournal.Views;      // <-- AÑADIDO: Asumiendo que las vistas están aquí
+using Google.Cloud.Firestore;
+using Plugin.LocalNotification;
+
 
 namespace MoodJournal
 {
@@ -40,6 +41,7 @@ namespace MoodJournal
             // 2. REGISTRO de FirestoreDb (Singleton)
             // Esto usa Google.Cloud.Firestore y necesita el Project ID.
             builder.Services.AddSingleton(FirestoreDb.Create(projectId));
+
 
             // 3. REGISTRO de Páginas para Inyección de Dependencias
             // Esto permite que el constructor de la página Registro reciba las instancias de Firebase.

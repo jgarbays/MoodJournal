@@ -58,6 +58,7 @@
 
                 <Button x:Name="button_perfil"
                        BackgroundColor="{StaticResource ColorPrincipalNaranja}"
+                        Clicked="OnPerfilClicked"
                         Text="perfil" />
 
                 <Button x:Name="button_ajustes"

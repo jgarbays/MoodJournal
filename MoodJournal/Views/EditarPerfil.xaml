@@ -1,0 +1,31 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MoodJournal.Views.EditarPerfil"
+             BackgroundColor="#F7F1D1"
+             Title="Editar Perfil">
+
+    <VerticalStackLayout Padding="30" Spacing="20">
+        <Label Text="editar información" FontSize="24" TextColor="#8D4925" HorizontalOptions="Center" FontAttributes="Bold"/>
+
+        <VerticalStackLayout Spacing="5">
+            <Label Text="Nombre" TextColor="#E57373"/>
+            <Entry x:Name="EntryNombre" Placeholder="Tu nombre"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Spacing="5">
+            <Label Text="Teléfono" TextColor="#E57373"/>
+            <Entry x:Name="EntryTelefono" Keyboard="Telephone" Placeholder="123 456 789"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Spacing="5">
+            <Label Text="Fecha de Nacimiento" TextColor="#E57373"/>
+            <DatePicker x:Name="PickerFecha"/>
+        </VerticalStackLayout>
+
+        <Button Text="GUARDAR CAMBIOS" 
+                Clicked="OnGuardarClicked"
+                BackgroundColor="#BC5D4E" 
+                TextColor="White" 
+                Margin="0,20,0,0"/>
+    </VerticalStackLayout>
+</ContentPage>

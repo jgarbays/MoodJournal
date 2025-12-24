@@ -16,4 +16,9 @@
         ContentTemplate="{DataTemplate local:Home}"
         Route="Home" />
 
+    <ShellContent
+    Title="Perfil"
+    ContentTemplate="{DataTemplate local:Perfil}"
+    Route="Perfil" />
+
 </Shell>

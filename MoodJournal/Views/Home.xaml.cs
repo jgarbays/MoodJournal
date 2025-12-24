@@ -83,4 +83,11 @@ public partial class Home : ContentPage
     {
         await Shell.Current.GoToAsync("Ajustes");
     }
+
+private async void OnPerfilClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//Perfil");
+    }
+
+
 }

@@ -44,11 +44,13 @@ namespace MoodJournal
                 // Nota: Ya no usamos UpdateProfileAsync para evitar errores de compilación.
                 // La Home leerá el nombre directamente de este diccionario.
                 var userData = new Dictionary<string, object>
-                {
-                    { "nombre_usuario", name },
-                    { "email", email },
-                    { "fecha_registro", DateTime.UtcNow }
-                };
+{
+    { "nombre_usuario", name },
+    { "email", email },
+    { "telefono", "" }, // Campo nuevo
+    { "fecha_nacimiento", "" }, // Campo nuevo
+    { "fecha_registro", DateTime.UtcNow }
+};
 
                 DocumentReference docRef = _firestoreDb.Collection("usuarios").Document(userId);
                 await docRef.SetAsync(userData);
