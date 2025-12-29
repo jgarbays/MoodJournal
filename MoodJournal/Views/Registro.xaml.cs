@@ -41,14 +41,13 @@ namespace MoodJournal
                 string userId = userCredential.User.Uid;
 
                 // 4. Guardar el nombre y otros datos en Firestore
-                // Nota: Ya no usamos UpdateProfileAsync para evitar errores de compilación.
                 // La Home leerá el nombre directamente de este diccionario.
                 var userData = new Dictionary<string, object>
 {
     { "nombre_usuario", name },
     { "email", email },
-    { "telefono", "" }, // Campo nuevo
-    { "fecha_nacimiento", "" }, // Campo nuevo
+    { "telefono", "" }, 
+    { "fecha_nacimiento", "" },
     { "fecha_registro", DateTime.UtcNow }
 };
 

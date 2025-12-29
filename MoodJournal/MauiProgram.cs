@@ -24,7 +24,7 @@ namespace MoodJournal
             // CONFIGURACIÓN DE FIREBASE (AUTH & FIRESTORE)
             // ==========================================================
 
-            // Define las constantes de tu proyecto
+            // Define las constantes del proyecto
             const string apiKey = "AIzaSyA521Rlu3USNVPRZMAVJY40bCQH6eNha8E";
             const string projectId = "moodjournal-e3dff"; // ID del Proyecto Firebase
             const string authDomain = "moodjournal-e3dff.firebaseapp.com";

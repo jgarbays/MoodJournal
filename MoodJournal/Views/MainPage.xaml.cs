@@ -69,7 +69,7 @@ namespace MoodJournal.Views
                 UserCredential userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(email, password);
 
                 // ==========================================================
-                // NUEVO: LÓGICA DE "RECORDARME" (Justo antes de navegar)
+                // LÓGICA DE "RECORDARME" (Justo antes de navegar)
                 // ==========================================================
                 if (chk_remember.IsChecked)
                 {

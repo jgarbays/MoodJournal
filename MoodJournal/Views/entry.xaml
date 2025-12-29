@@ -71,32 +71,50 @@
              HorizontalOptions="Center"
              Spacing="8"  Margin="0, 0, 0, 24">
 
-                    <StackLayout Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                    <StackLayout x:Name="StackContento" Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMoodSelected" CommandParameter="contento" />
+                        </StackLayout.GestureRecognizers>
                         <Label Text="🙂" FontSize="36" HorizontalOptions="Center" />
                         <Label Text="contento" FontSize="12" TextColor="{StaticResource TextoOscuro}" HorizontalOptions="Center" />
                     </StackLayout>
 
-                    <StackLayout Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                    <StackLayout x:Name="StackFeliz" Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMoodSelected" CommandParameter="feliz" />
+                        </StackLayout.GestureRecognizers>
                         <Label Text="😄" FontSize="36" HorizontalOptions="Center" />
                         <Label Text="feliz" FontSize="12" TextColor="{StaticResource TextoOscuro}" HorizontalOptions="Center" />
                     </StackLayout>
 
-                    <StackLayout Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                    <StackLayout x:Name="StackMeh" Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMoodSelected" CommandParameter="meh" />
+                        </StackLayout.GestureRecognizers>
                         <Label Text="😐" FontSize="36" HorizontalOptions="Center" />
                         <Label Text="meh" FontSize="12" TextColor="{StaticResource TextoOscuro}" HorizontalOptions="Center" />
                     </StackLayout>
 
-                    <StackLayout Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                    <StackLayout x:Name="StackNervioso" Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMoodSelected" CommandParameter="nervioso" />
+                        </StackLayout.GestureRecognizers>
                         <Label Text="😨" FontSize="36" HorizontalOptions="Center" />
                         <Label Text="nervioso" FontSize="12" TextColor="{StaticResource TextoOscuro}" HorizontalOptions="Center" />
                     </StackLayout>
 
-                    <StackLayout Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                    <StackLayout x:Name="StackEnfadado" Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMoodSelected" CommandParameter="enfadado" />
+                        </StackLayout.GestureRecognizers>
                         <Label Text="😡" FontSize="36" HorizontalOptions="Center" />
                         <Label Text="enfadado" FontSize="12" TextColor="{StaticResource TextoOscuro}" HorizontalOptions="Center" />
                     </StackLayout>
 
-                    <StackLayout Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                    <StackLayout x:Name="StackTriste" Orientation="Vertical" HorizontalOptions="Center" WidthRequest="55">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMoodSelected" CommandParameter="triste" />
+                        </StackLayout.GestureRecognizers>
                         <Label Text="😟" FontSize="36" HorizontalOptions="Center" />
                         <Label Text="triste" FontSize="12" TextColor="{StaticResource TextoOscuro}" HorizontalOptions="Center" />
                     </StackLayout>
@@ -126,14 +144,7 @@
                             Keyboard="Text" />
                 </Border>
 
-                <Button x:Name="button_add_photo"
-                        Text="+ añadir foto"
-                        FontSize="14"
-                        TextColor="{StaticResource ColorPrincipalRosa}"
-                        HeightRequest="40"
-                        BackgroundColor="Transparent"
-                        BorderWidth="0"
-                        HorizontalOptions="End" />
+               
 
             </StackLayout>
         </ScrollView>
@@ -151,7 +162,8 @@
                     BackgroundColor="{StaticResource ColorPrincipalNaranja}"
                     HeightRequest="55"
                     HorizontalOptions="FillAndExpand"
-                    />
+                    Clicked="OnGuardarEntradaClicked"
+                                     />
         </StackLayout>
 
     </Grid>
