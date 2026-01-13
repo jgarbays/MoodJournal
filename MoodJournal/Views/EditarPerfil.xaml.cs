@@ -17,7 +17,13 @@ public partial class EditarPerfil : ContentPage
         // Rellenamos los campos con los datos que ya tenemos
         EntryNombre.Text = datos["nombre"];
         EntryTelefono.Text = datos["telefono"];
-        // PickerFecha.Date = ... (puedes convertir el string a DateTime)
+        if (datos.ContainsKey("fecha") && !string.IsNullOrEmpty(datos["fecha"]))
+        {
+            if (DateTime.TryParse(datos["fecha"], out DateTime fechaParseada))
+            {
+                PickerFecha.Date = fechaParseada;
+            }
+        }
     }
 
     private async void OnGuardarClicked(object sender, EventArgs e)

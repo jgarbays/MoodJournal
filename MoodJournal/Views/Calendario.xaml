@@ -1,0 +1,42 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:kal="clr-namespace:Plugin.Maui.Calendar.Controls;assembly=Plugin.Maui.Calendar"
+             x:Class="MoodJournal.Views.Calendario"
+             BackgroundColor="#F7F1D1">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
+                <Label Text="⬅" FontSize="24" TextColor="#E57373" VerticalOptions="Center"  FontAttributes="Bold"/>
+                <Label Text="atrás" FontSize="20" TextColor="#E57373" VerticalOptions="Center"  FontAttributes="Bold"/>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped"/>
+                </HorizontalStackLayout.GestureRecognizers>
+            </HorizontalStackLayout>
+            <Label Text="calendario" FontSize="32" TextColor="#BC5D4E" 
+         HorizontalOptions="Center" FontAttributes="Bold" />
+
+
+            <kal:Calendar x:Name="CalendarioControl"
+              EventIndicatorColor="#FADADD"
+              SelectedDayBackgroundColor="#BC5D4E"
+              SelectedDayTextColor="White" 
+              TodayOutlineColor="#BC5D4E"
+              DayViewSize="45"
+                      
+               />
+
+            <Label Text="entrada del día:" FontSize="22" TextColor="#BC5D4E" FontAttributes="Bold" Margin="0,15,0,5" />
+
+            <Border StrokeShape="RoundRectangle 15" BackgroundColor="White" Padding="15">
+                <VerticalStackLayout x:Name="StackDetalle" IsVisible="False">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label x:Name="LabelEmoji" FontSize="30" />
+                        <Label x:Name="LabelHumor" FontSize="22" TextColor="#BC5D4E" FontAttributes="Bold" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <Label x:Name="LabelContenido" TextColor="#555" Margin="0,10,0,0" LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

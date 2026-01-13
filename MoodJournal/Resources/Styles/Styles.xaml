@@ -19,6 +19,13 @@
         <Setter Property="StrokeThickness" Value="1"/>
     </Style>
 
+    <Style TargetType="Label" x:Key="CalendarHeaderLabelStyle">
+        <Setter Property="TextColor" Value="#BC5D4E" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
     <Style TargetType="BoxView">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>

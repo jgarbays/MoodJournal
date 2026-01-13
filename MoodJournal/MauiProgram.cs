@@ -3,6 +3,7 @@ using Firebase.Auth;
 using Firebase.Auth.Providers;
 using Google.Cloud.Firestore;
 using Plugin.LocalNotification;
+using Microcharts.Maui;
 
 
 namespace MoodJournal
@@ -14,6 +15,8 @@ namespace MoodJournal
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMicrocharts()
+              
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -41,13 +44,16 @@ namespace MoodJournal
             // 2. REGISTRO de FirestoreDb (Singleton)
             // Esto usa Google.Cloud.Firestore y necesita el Project ID.
             builder.Services.AddSingleton(FirestoreDb.Create(projectId));
-
+            builder.Services.AddSingleton<INotificationService>(sp => LocalNotificationCenter.Current);
 
             // 3. REGISTRO de Páginas para Inyección de Dependencias
             // Esto permite que el constructor de la página Registro reciba las instancias de Firebase.
             builder.Services.AddTransient<Registro>();
             builder.Services.AddTransient<MoodJournal.Views.Home>();
             builder.Services.AddTransient<MoodJournal.Views.MainPage>();
+            builder.Services.AddTransient<MoodJournal.Views.Estadisticas>();
+            builder.Services.AddTransient<MoodJournal.Views.Calendario>();
+            builder.Services.AddTransient<MoodJournal.Views.Ajustes>();
 
 
             // ==========================================================

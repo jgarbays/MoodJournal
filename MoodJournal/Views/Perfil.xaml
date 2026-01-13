@@ -6,8 +6,8 @@
         <VerticalStackLayout Padding="30" Spacing="20">
 
             <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
-                <Label Text="←" FontSize="24" TextColor="#E57373" VerticalOptions="Center"/>
-                <Label Text="atrás" FontSize="20" TextColor="#E57373" VerticalOptions="Center"/>
+                <Label Text="⬅" FontSize="24" TextColor="#E57373" VerticalOptions="Center"  FontAttributes="Bold"/>
+                <Label Text="atrás" FontSize="20" TextColor="#E57373" VerticalOptions="Center"  FontAttributes="Bold"/>
                 <HorizontalStackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnBackTapped"/>
                 </HorizontalStackLayout.GestureRecognizers>

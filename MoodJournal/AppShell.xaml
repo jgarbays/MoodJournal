@@ -21,4 +21,19 @@
     ContentTemplate="{DataTemplate local:Perfil}"
     Route="Perfil" />
 
+    <ShellContent
+ Title="Historial"
+ ContentTemplate="{DataTemplate local:Historial}"
+ Route="Historial" />
+
+    <ShellContent
+ Title="Estadisticas"
+ ContentTemplate="{DataTemplate local:Estadisticas}"
+ Route="Estadisticas" />
+
+    <ShellContent
+Title="Calendario"
+ContentTemplate="{DataTemplate local:Calendario}"
+Route="Calendario" />
+
 </Shell>

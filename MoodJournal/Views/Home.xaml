@@ -45,15 +45,18 @@
 
                 <Button x:Name="button_historial"
                        BackgroundColor="{StaticResource ColorPrincipalNaranja}"
-                        Text="historial" />
+                        Text="historial"
+                        Clicked="OnHistorialClicked"/>
 
                 <Button x:Name="button_calendario"
                       BackgroundColor="{StaticResource ColorPrincipalNaranja}"
                         Text="calendario" 
+                        Clicked="OnCalendarioClicked"
                          />
 
                 <Button x:Name="button_estadisticas"
                        BackgroundColor="{StaticResource ColorPrincipalNaranja}"
+                        Clicked="OnEstadisticasClicked"
                         Text="estadísticas" />
 
                 <Button x:Name="button_perfil"

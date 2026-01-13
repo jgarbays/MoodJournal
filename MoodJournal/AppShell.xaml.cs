@@ -18,8 +18,11 @@ namespace MoodJournal
             Routing.RegisterRoute("Ajustes", typeof(Ajustes));
             Routing.RegisterRoute("entry", typeof(entry));
             Routing.RegisterRoute("Perfil", typeof(Perfil));
+            Routing.RegisterRoute("Historial", typeof(Historial));
+            Routing.RegisterRoute("Estadisticas", typeof(Estadisticas));
+            Routing.RegisterRoute("Calendario", typeof(Calendario));
 
-           
+
         }
     }
 }

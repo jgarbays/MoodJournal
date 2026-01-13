@@ -25,7 +25,7 @@ namespace MoodJournal.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            CargarDatosUsuario(); // Se ejecutará cada vez que la página sea visible
+            CargarDatosUsuario(); 
         }
 
 
@@ -50,7 +50,7 @@ namespace MoodJournal.Views
                         Dictionary<string, object> userData = snapshot.ToDictionary();
 
                         // 3. Actualizar la interfaz con los datos de Firestore
-                        // Usamos los mismos nombres de campo que definiste en el Registro
+                        // Usamos los mismos nombres de campo definidos en el Registro
                         NombreLabel.Text = userData.ContainsKey("nombre_usuario")
                             ? userData["nombre_usuario"].ToString()
                             : "Usuario";
@@ -59,7 +59,7 @@ namespace MoodJournal.Views
                             ? userData["email"].ToString()
                             : user.Info.Email;
 
-                        // Datos adicionales que podrías haber guardado o que el usuario editará
+                        // Datos adicionales que el usuario editará
                         TelefonoLabel.Text = userData.ContainsKey("telefono")
                             ? userData["telefono"].ToString()
                             : "No definido";
@@ -68,7 +68,7 @@ namespace MoodJournal.Views
                             ? userData["fecha_nacimiento"].ToString()
                             : "No definido";
 
-                        // Si guardas la URL de la foto en Firestore
+                        // Si existe una URL de la foto en Firestore
                         if (userData.ContainsKey("foto_url"))
                         {
                             ProfileImage.Source = userData["foto_url"].ToString();
@@ -103,14 +103,14 @@ namespace MoodJournal.Views
             // Usamos Navigation.PushAsync para que pueda volver con el botón de atrás
             await Navigation.PushAsync(new EditarPerfil(datosActuales, _firestoreDb, _firebaseAuthClient));
         }
-        // Método para cambiar la foto (Lápiz)
+        // Método para cambiar la foto 
         private async void OnCambiarFotoClicked(object sender, EventArgs e)
         {
             try
             {
                 // 1. Seleccionar la foto del móvil
-                var photo = await MediaPicker.Default.PickPhotoAsync();
-                if (photo == null) return;
+                var photo = await MediaPicker.Default.PickPhotoAsync(); // Abre el picker nativo del dispositivo
+                if (photo == null) return; // Si no se selecciona foto, se regresa
 
                 // Mostrar un aviso de que se está subiendo
                 await DisplayAlert("Subiendo", "Espera un momento mientras actualizamos tu foto...", "OK");
@@ -118,21 +118,20 @@ namespace MoodJournal.Views
                 // 2. Abrir el stream del archivo seleccionado
                 using (var stream = await photo.OpenReadAsync())
                 {
-                    // 3. Configurar la subida a Firebase Storage
-                    // Reemplaza "tu-proyecto.appspot.com" con tu bucket real de Firebase
+                    // 3. Configurar la subida a Firebase Storage indicando el bucket de Firebase de Moodjournal
                     var task = new FirebaseStorage("moodjournal-e3dff.firebasestorage.app")
-                        .Child("fotos_perfil")
-                        .Child($"{_firebaseAuthClient.User.Uid}.jpg")
-                        .PutAsync(stream);
+                        .Child("fotos_perfil") // Dentro del bucket, va a donde están las fotos de perfil
+                        .Child($"{_firebaseAuthClient.User.Uid}.jpg") // Busca específicamente el elemento asociado a este usuario
+                        .PutAsync(stream); // Actualiza la foto con lo que llega a través del stream
 
                     // 4. Esperar a que termine y obtener la URL de descarga
                     string downloadUrl = await task;
 
                     // 5. Actualizar Firestore con la nueva URL
-                    string uid = _firebaseAuthClient.User.Uid;
-                    DocumentReference docRef = _firestoreDb.Collection("usuarios").Document(uid);
+                    string uid = _firebaseAuthClient.User.Uid; // Obtiene el ID del usuario
+                    DocumentReference docRef = _firestoreDb.Collection("usuarios").Document(uid); // Obtiene el documento asociado a este ID
 
-                    await docRef.UpdateAsync("foto_url", downloadUrl);
+                    await docRef.UpdateAsync("foto_url", downloadUrl); // actualiza este documento
 
                     // 6. Actualizar la imagen en la pantalla
                     ProfileImage.Source = ImageSource.FromUri(new Uri(downloadUrl));

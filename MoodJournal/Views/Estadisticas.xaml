@@ -1,0 +1,72 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:charts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             x:Class="MoodJournal.Views.Estadisticas"
+             BackgroundColor="#F7F1D1">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <Label Text="⬅ atrás"
+                   FontSize="20"
+                   TextColor="{StaticResource ColorPrincipalRosa}"
+                   FontAttributes="Bold">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label Text="estadísticas" FontSize="32" TextColor="#BC5D4E" 
+                   HorizontalOptions="Center" FontAttributes="Bold" />
+
+            <Border StrokeShape="RoundRectangle 15" BackgroundColor="White" Padding="15">
+                <VerticalStackLayout>
+                    <Label Text="Últimos seis meses:" TextColor="#BC5D4E" Margin="0,0,0,10" FontAttributes="Bold" />
+
+                    <Grid ColumnDefinitions="40, *" HeightRequest="180">
+                        <VerticalStackLayout Grid.Column="0" 
+                                 VerticalOptions="FillAndExpand" 
+                                 
+                                 Padding="0,5">
+                            <Label Text="😄" HorizontalOptions="Center" FontSize="18" />
+                            <Label Text="🙂" HorizontalOptions="Center" FontSize="18" />
+                            <Label Text="😐" HorizontalOptions="Center" FontSize="18" />
+                            <Label Text="😟" HorizontalOptions="Center" FontSize="18" />
+                            <Label Text="😡" HorizontalOptions="Center" FontSize="18" />
+                            <Label Text="☹️" HorizontalOptions="Center" FontSize="18" />
+                        </VerticalStackLayout>
+
+                        <charts:ChartView Grid.Column="1" 
+                              x:Name="ChartSeisMeses" 
+                              HorizontalOptions="FillAndExpand" 
+                              VerticalOptions="FillAndExpand" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border StrokeShape="RoundRectangle 15" BackgroundColor="White" Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="esta semana:" TextColor="#BC5D4E" Margin="10,5" />
+                    <charts:ChartView x:Name="ChartSemana"   HeightRequest="180" 
+  MinimumHeightRequest="180"
+  HorizontalOptions="FillAndExpand"
+  VerticalOptions="FillAndExpand" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label x:Name="LabelTituloMes" 
+       FontSize="24" 
+       TextColor="#BC5D4E" 
+       FontAttributes="Bold" 
+       Margin="20,10" />
+
+            <FlexLayout x:Name="FlexResumen" 
+            Wrap="Wrap" 
+            Direction="Row" 
+            JustifyContent="SpaceEvenly" 
+            AlignContent="Start" 
+            AlignItems="Start"
+            Margin="10" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

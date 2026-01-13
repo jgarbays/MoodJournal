@@ -63,7 +63,6 @@ public partial class Home : ContentPage
             try
             {
                 _authClient.SignOut();
-                // Usamos // para resetear la navegación y volver al Login
                 await Shell.Current.GoToAsync("//MainPage");
             }
             catch (Exception ex)
@@ -75,7 +74,6 @@ public partial class Home : ContentPage
 
     private async void OnNuevaEntradaClicked(object sender, EventArgs e)
     {
-        // IMPORTANTE: Usamos Shell para que MAUI se encargue de la Inyección de Dependencias
         await Shell.Current.GoToAsync("entry");
     }
 
@@ -84,9 +82,28 @@ public partial class Home : ContentPage
         await Shell.Current.GoToAsync("Ajustes");
     }
 
-private async void OnPerfilClicked(object sender, EventArgs e)
+    private async void OnHistorialClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("//Perfil");
+        await Shell.Current.GoToAsync("Historial");
+    }
+
+    private async void OnEstadisticasClicked(object sender, EventArgs e)
+    {
+    
+            await Shell.Current.GoToAsync("Estadisticas");
+        
+    }
+
+    private async void OnCalendarioClicked(object sender, EventArgs e)
+    {
+
+        await Shell.Current.GoToAsync("Calendario");
+
+    }
+
+    private async void OnPerfilClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("Perfil");
     }
 
 

@@ -1,0 +1,88 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MoodJournal.Views.Historial"
+             BackgroundColor="#F7F1D1">
+
+    <Grid RowDefinitions="Auto, Auto, *" Padding="20">
+
+        <HorizontalStackLayout Grid.Row="0" Spacing="10" Margin="0,0,0,20">
+            <Label Text="⬅" FontSize="24" TextColor="#E57373" VerticalOptions="Center"  FontAttributes="Bold"/>
+            <Label Text="atrás" FontSize="20" TextColor="#E57373" VerticalOptions="Center"  FontAttributes="Bold"/>
+            <HorizontalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnBackTapped"/>
+            </HorizontalStackLayout.GestureRecognizers>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Grid.Row="1" Spacing="15" VerticalOptions="Center" Margin="0,0,0,20">
+            <Border Stroke="#BC5D4E" StrokeThickness="1" StrokeShape="RoundRectangle 5" Padding="5">
+                <Picker x:Name="PickerFiltroHumor" Title="filtrar por" FontSize="14" WidthRequest="120" TextColor="#333333" SelectedIndexChanged="OnFiltroChanged">
+                    <Picker.Items>
+                        <x:String>Todos</x:String>
+                        <x:String>contento</x:String>
+                        <x:String>feliz</x:String>
+                        <x:String>triste</x:String>
+                        <x:String>meh</x:String>
+                        <x:String>nervioso</x:String>
+                        <x:String>enfadado</x:String>
+                    </Picker.Items>
+                </Picker>
+            </Border>
+            <Border Stroke="#BC5D4E" Padding="5" StrokeShape="RoundRectangle 5">
+                <Picker x:Name="PickerFiltroMes" Title="Mes" WidthRequest="130" SelectedIndexChanged="OnFiltroChanged" />
+            </Border>
+            <Label Text="historial" FontSize="32" TextColor="#BC5D4E" FontAttributes="Bold" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+
+        <CollectionView Grid.Row="2" x:Name="CollectionHistorial" SelectionMode="Single"
+                SelectionChanged="OnEntrySelected">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="70, *" Margin="0,0,0,15">
+
+                        <Border Grid.Column="0" BackgroundColor="#E57373" StrokeShape="RoundRectangle 15" HeightRequest="80">
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <Label Text="{Binding Dia}" TextColor="White" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Text="{Binding Mes}" TextColor="White" FontSize="18" HorizontalOptions="Center" Margin="0,-5,0,0"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Grid.Column="1" BackgroundColor="White" StrokeShape="RoundRectangle 15" Margin="10,0,0,0" Padding="15">
+                            <VerticalStackLayout Spacing="2">
+                                <HorizontalStackLayout Spacing="5">
+                                    <Label Text="me siento:" TextColor="#E57373" FontSize="16"/>
+                                    <Label Text="{Binding Emoji}" FontSize="16"/>
+                                    <Label Text="{Binding Humor}" TextColor="#E57373" FontSize="16"/>
+                                </HorizontalStackLayout>
+                                <Label Text="{Binding Contenido}" TextColor="#333333" FontSize="14" LineBreakMode="WordWrap" MaxLines="3"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" 
+                             VerticalOptions="Center" 
+                             Spacing="20" 
+                             Padding="40">
+
+                    <Label Text="💔" 
+                   FontSize="80" 
+                   HorizontalOptions="Center" />
+
+                    <Label Text="no hemos encontrado entradas para este filtro..." 
+                   FontSize="18" 
+                   TextColor="#BC5D4E" 
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center" />
+
+                    <Label Text="prueba a cambiar los filtros o empieza a escribir hoy mismo." 
+                   FontSize="14" 
+                   TextColor="#333333" 
+                   HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+        </CollectionView>
+    </Grid>
+</ContentPage>
