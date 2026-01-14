@@ -6,6 +6,11 @@ using MoodJournal.Views; // Si Home y Registro están aquí
 using Google.Cloud.Firestore; // Aunque no se usa en login, se mantiene si lo necesitas después
 using Microsoft.Extensions.DependencyInjection; // Necesario para GetService si mantienes esa opción
 using Firebase.Auth.Providers; // Necesario si manejas AuthErrorReason
+using Firebase;
+#if ANDROID
+using Plugin.CloudFirestore;
+#endif
+
 
 namespace MoodJournal.Views
 {
@@ -24,10 +29,11 @@ namespace MoodJournal.Views
             }
             catch (Exception ex) {
             // Esto obligará a que el error aparezca en una ventana emergente
-                Application.Current.MainPage.DisplayAlert("Error de Inicio", ex.Message, "OK");
-                System.Diagnostics.Debug.WriteLine($"🛑 ERROR CRÍTICO: {ex}");
+                System.Diagnostics.Debug.WriteLine($"🛑 ERROR CRÍTICO: {ex.Message}");
             }
         }
+
+
 
         // ==========================================================
         // LÓGICA DE INICIO DE SESIÓN (Login)
@@ -92,7 +98,7 @@ namespace MoodJournal.Views
                 await DisplayAlert("Éxito", $"¡Hola de nuevo!", "OK");
                 await Shell.Current.GoToAsync("//Home");
             }
-            catch (FirebaseAuthException authEx)
+            catch (Firebase.Auth.FirebaseAuthException authEx)
             {
                 string msg = authEx.Reason switch
                 {

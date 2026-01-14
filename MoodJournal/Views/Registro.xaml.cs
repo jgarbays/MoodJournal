@@ -2,6 +2,9 @@ using Firebase.Auth;
 using Google.Cloud.Firestore;
 using System;
 using Microsoft.Maui.Controls;
+#if ANDROID
+using Plugin.CloudFirestore;
+#endif
 
 namespace MoodJournal
 {
@@ -59,7 +62,7 @@ namespace MoodJournal
                 // 5. Navegar a la Home (Usando // para limpiar el historial)
                 await Shell.Current.GoToAsync("//Home");
             }
-            catch (FirebaseAuthException authEx)
+            catch (Firebase.Auth.FirebaseAuthException authEx)
             {
                 // Manejo de errores amigable según el motivo de Firebase
                 string msg = authEx.Reason switch

@@ -1,6 +1,9 @@
 using Google.Cloud.Firestore;
 using Firebase.Auth;
 using System.Collections.ObjectModel;
+#if ANDROID
+using Plugin.CloudFirestore;
+#endif
 
 namespace MoodJournal.Views;
 
@@ -26,35 +29,57 @@ public partial class Historial : ContentPage
         try
         {
             string uid = _authClient.User.Uid;
-
-            Query query = _firestoreDb.Collection("usuarios").Document(uid)
-                                      .Collection("entradas")
-                                      .OrderByDescending("fecha");
-
-            QuerySnapshot snapshot = await query.GetSnapshotAsync();
-
-            // 1. Limpiamos las listas ANTES de empezar el bucle
             _todasLasEntradas.Clear();
             Entradas.Clear();
 
-            foreach (DocumentSnapshot doc in snapshot.Documents)
-            {
-                Dictionary<string, object> data = doc.ToDictionary();
+#if ANDROID
+            // --- LÓGICA PARA ANDROID (Plugin Nativo) ---
+            var querySnapshot = await CrossCloudFirestore.Current
+                                        .Instance
+                                        .Collection("usuarios")
+                                        .Document(uid)
+                                        .Collection("entradas")
+                                        .OrderBy("fecha", descending: true)
+                                        .GetAsync();
 
-                // 2. Creamos el objeto con los datos reales de Firebase
+            foreach (var doc in querySnapshot.Documents)
+            {
+                var data = doc.Data;
                 var entry = new JournalEntry
                 {
                     Id = doc.Id,
                     Humor = data.ContainsKey("humor") ? data["humor"]?.ToString() : "indefinido",
                     Contenido = data.ContainsKey("contenido") ? data["contenido"]?.ToString() : "",
-                    Fecha = data.ContainsKey("fecha") ? ((Timestamp)data["fecha"]).ToDateTime() : DateTime.Now
+                    // El Plugin de Android devuelve las fechas directamente como DateTime o Timestamp nativo
+                    Fecha = data.ContainsKey("fecha") ? Convert.ToDateTime(data["fecha"]) : DateTime.Now
                 };
-
-                // 3. Lo añadimos a nuestra lista maestra
                 _todasLasEntradas.Add(entry);
             }
+#else
+            // --- LÓGICA PARA WINDOWS (Google.Cloud.Firestore) ---
+            if (_firestoreDb != null)
+            {
+                Query query = _firestoreDb.Collection("usuarios").Document(uid)
+                                          .Collection("entradas")
+                                          .OrderByDescending("fecha");
 
-            // 4. UNA VEZ TERMINADO EL BUCLE, actualizamos la interfaz y los pickers
+                QuerySnapshot snapshot = await query.GetSnapshotAsync();
+
+                foreach (DocumentSnapshot doc in snapshot.Documents)
+                {
+                    Dictionary<string, object> data = doc.ToDictionary();
+                    var entry = new JournalEntry
+                    {
+                        Id = doc.Id,
+                        Humor = data.ContainsKey("humor") ? data["humor"]?.ToString() : "indefinido",
+                        Contenido = data.ContainsKey("contenido") ? data["contenido"]?.ToString() : "",
+                        Fecha = data.ContainsKey("fecha") ? ((Timestamp)data["fecha"]).ToDateTime() : DateTime.Now
+                    };
+                    _todasLasEntradas.Add(entry);
+                }
+            }
+#endif
+
             CargarMesesEnPicker();
             ActualizarListaVisual(_todasLasEntradas);
         }

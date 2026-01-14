@@ -2,6 +2,10 @@
 using Google.Cloud.Firestore;
 using System.ComponentModel;
 using Plugin.LocalNotification;
+#if ANDROID
+using Plugin.CloudFirestore;
+#endif
+
 
 namespace MoodJournal.Views;
 
@@ -205,65 +209,37 @@ public partial class Ajustes : ContentPage
 
 
 
-                // 4. BORRAR DATOS DE FIRESTORE
+                // 2. Borrado de datos en Firestore (Lógica Híbrida)
+#if ANDROID
+                await CrossCloudFirestore.Current.Instance
+                    .Collection("usuarios").Document(user.Uid).DeleteAsync();
+#else
+                if (_firestoreDb != null)
+                {
+                    await _firestoreDb.Collection("usuarios").Document(user.Uid).DeleteAsync();
+                }
+#endif
 
-                await _firestoreDb.Collection("usuarios").Document(user.Uid).DeleteAsync();
-
-
-
-                // 5. BORRAR EL USUARIO DE AUTH
-
+                // 3. Borrar el usuario de Firebase Auth
                 await user.DeleteAsync();
-
-
 
                 await DisplayAlert("Cuenta eliminada", "Tu cuenta y tus datos han sido eliminados.", "OK");
 
-
-
-                // 6. LIMPIAR PREFERENCIAS Y VOLVER AL INICIO
-
                 Preferences.Default.Clear();
-
                 SecureStorage.Default.RemoveAll();
-
                 await Shell.Current.GoToAsync("//MainPage");
-
             }
-
         }
-
-        catch (FirebaseAuthException authEx)
-
+        catch (Firebase.Auth.FirebaseAuthException authEx) // Prefijo completo para evitar error CS0433
         {
-
-            // Si la contraseña introducida en el prompt es incorrecta
-
             if (authEx.Reason == AuthErrorReason.WrongPassword)
-
-            {
-
-                await DisplayAlert("Error", "La contraseña no es correcta. No se pudo borrar la cuenta.", "Aceptar");
-
-            }
-
+                await DisplayAlert("Error", "La contraseña no es correcta.", "Aceptar");
             else
-
-            {
-
                 await DisplayAlert("Error", "Error de autenticación: " + authEx.Message, "OK");
-
-            }
-
         }
-
         catch (Exception ex)
-
         {
-
             await DisplayAlert("Error", "No se pudo completar la acción: " + ex.Message, "OK");
-
         }
-
     }
 }

@@ -2,6 +2,10 @@ using Firebase.Auth;
 using Google.Cloud.Firestore;
 using Microsoft.Maui.Controls.Shapes;
 
+#if ANDROID
+using Plugin.CloudFirestore;
+#endif
+
 namespace MoodJournal.Views;
 
 public partial class entry : ContentPage
@@ -75,16 +79,37 @@ public partial class entry : ContentPage
                 { "humor", _selectedMood },
                 { "contenido", textoEntrada },
                 { "fecha", DateTime.UtcNow },
-                { "timestamp", FieldValue.ServerTimestamp } // Útil para ordenar por fecha real
+               
             };
 
-            // 2. Guardar en Firestore: usuarios/{uid}/entradas/{id_automatico}
-            CollectionReference entradasRef = _firestoreDb
-                .Collection("usuarios")
-                .Document(uid)
-                .Collection("entradas");
 
-            await entradasRef.AddAsync(nuevaEntrada);
+            // 2. Ejecución condicional según plataforma
+#if ANDROID
+            // Lógica para ANDROID (Plugin nativo)
+            await CrossCloudFirestore.Current
+                                     .Instance
+                                     .Collection("usuarios")
+                                     .Document(uid)
+                                     .Collection("entradas")
+                                     .AddAsync(nuevaEntrada);
+#else
+            // Lógica para WINDOWS (Google.Cloud.Firestore)
+            if (_firestoreDb != null)
+            {  //Se ha cambiado de FieldValue.ServerTimestamp a Google.Cloud.Firestore.FieldValue.ServerTimestamp para que reconozca que se trata de Google Cloud y no del Plugin de Android
+                nuevaEntrada.Add("timestamp", Google.Cloud.Firestore.FieldValue.ServerTimestamp);
+
+                CollectionReference entradasRef = _firestoreDb
+                    .Collection("usuarios")
+                    .Document(uid)
+                    .Collection("entradas");
+
+                await entradasRef.AddAsync(nuevaEntrada);
+            }
+            else
+            {
+                throw new Exception("La base de datos no está inicializada en Windows.");
+            }
+#endif
 
             await DisplayAlert("¡Guardado!", "Tu entrada de hoy se ha guardado correctamente.", "OK");
 
