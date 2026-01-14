@@ -62,23 +62,35 @@ namespace MoodJournal
                 // 5. Navegar a la Home (Usando // para limpiar el historial)
                 await Shell.Current.GoToAsync("//Home");
             }
-            catch (Firebase.Auth.FirebaseAuthException authEx)
+            catch (Exception ex)
             {
-                // Manejo de errores amigable según el motivo de Firebase
-                string msg = authEx.Reason switch
+                // Usamos reflexión para obtener el nombre del tipo de error sin invocar la clase conflictiva
+                string errorType = ex.GetType().Name;
+                string msg = "Ocurrió un error inesperado.";
+
+                if (errorType.Contains("FirebaseAuthException"))
                 {
-                    AuthErrorReason.EmailExists => "Este email ya está registrado.",
-                    AuthErrorReason.WeakPassword => "La contraseña debe tener al menos 6 caracteres.",
-                    AuthErrorReason.InvalidEmailAddress => "El formato del email no es válido.",
-                    _ => "Error de autenticación: " + authEx.Message
-                };
+                    // Como no podemos usar el 'switch' con AuthErrorReason por el conflicto, 
+                    // buscamos palabras clave en el mensaje de error o simplemente damos un aviso general
+                    string errorDetail = ex.Message.ToLower();
+
+                    if (errorDetail.Contains("email_exists"))
+                        msg = "Este email ya está registrado.";
+                    else if (errorDetail.Contains("weak_password"))
+                        msg = "La contraseña debe tener al menos 6 caracteres.";
+                    else if (errorDetail.Contains("invalid_email"))
+                        msg = "El formato del email no es válido.";
+                    else
+                        msg = "Error de autenticación: " + ex.Message;
+                }
+                else
+                {
+                    msg = "Error: " + ex.Message;
+                }
 
                 await DisplayAlert("Error de Registro", msg, "OK");
             }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", "Ocurrió un error inesperado: " + ex.Message, "OK");
-            }
+            
         }
 
         // Método para el label "Ya tengo una cuenta"

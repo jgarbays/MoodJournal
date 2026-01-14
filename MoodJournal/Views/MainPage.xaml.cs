@@ -98,20 +98,31 @@ namespace MoodJournal.Views
                 await DisplayAlert("Éxito", $"¡Hola de nuevo!", "OK");
                 await Shell.Current.GoToAsync("//Home");
             }
-            catch (Firebase.Auth.FirebaseAuthException authEx)
+            catch (Exception ex)
             {
-                string msg = authEx.Reason switch
+                string msg = "Ocurrió un error inesperado.";
+
+                // 1. Detectamos si es un error de Firebase por su nombre (como texto)
+                if (ex.GetType().Name.Contains("FirebaseAuthException"))
                 {
-                    AuthErrorReason.UserNotFound => "No existe una cuenta con este email.",
-                    AuthErrorReason.WrongPassword => "Contraseña incorrecta. Inténtelo de nuevo.",
-                    AuthErrorReason.InvalidEmailAddress => "El formato del email es incorrecto.",
-                    _ => "Error de inicio de sesión: " + authEx.Message
-                };
+                    // 2. Buscamos palabras clave dentro del mensaje de error
+                    string errorDetail = ex.Message.ToLower();
+
+                    if (errorDetail.Contains("user_not_found") || errorDetail.Contains("invalid_user"))
+                        msg = "No existe una cuenta con este email.";
+                    else if (errorDetail.Contains("wrong_password"))
+                        msg = "Contraseña incorrecta. Inténtelo de nuevo.";
+                    else if (errorDetail.Contains("invalid_email"))
+                        msg = "El formato del email es incorrecto.";
+                    else
+                        msg = "Error de acceso: " + ex.Message;
+                }
+                else
+                {
+                    msg = "Error: " + ex.Message;
+                }
+
                 await DisplayAlert("Error de Acceso", msg, "OK");
-            }
-            catch (Exception)
-            {
-                await DisplayAlert("Error", "Ocurrió un error inesperado.", "OK");
             }
         }
 

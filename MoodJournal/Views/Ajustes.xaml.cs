@@ -230,16 +230,18 @@ public partial class Ajustes : ContentPage
                 await Shell.Current.GoToAsync("//MainPage");
             }
         }
-        catch (Firebase.Auth.FirebaseAuthException authEx) // Prefijo completo para evitar error CS0433
-        {
-            if (authEx.Reason == AuthErrorReason.WrongPassword)
-                await DisplayAlert("Error", "La contraseña no es correcta.", "Aceptar");
-            else
-                await DisplayAlert("Error", "Error de autenticación: " + authEx.Message, "OK");
-        }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", "No se pudo completar la acción: " + ex.Message, "OK");
+            // Verificamos si el nombre del error contiene "FirebaseAuthException" 
+            // sin mencionar la clase directamente para evitar el conflicto
+            if (ex.GetType().Name.Contains("FirebaseAuthException"))
+            {
+                await DisplayAlert("Error de Acceso", "Credenciales incorrectas o problema de usuario.", "OK");
+            }
+            else
+            {
+                await DisplayAlert("Error", "Ocurrió un problema: " + ex.Message, "OK");
+            }
         }
     }
 }
