@@ -10,10 +10,14 @@ public class WindowsPersistenceStrategy : IPersistenceStrategy
     {
         this._firestoreDb = firestoreDb;
     }
+
+
     public Task<UserProfile> GetDataFromUserAsync(string userUid)
     {
         throw new NotImplementedException();
     }
+
+
     public async Task<List<JournalEntry>> GetJournalEntriesAsync(string uid)
     {
 

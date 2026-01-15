@@ -4,6 +4,8 @@ using Firebase.Auth;
 using Google.Cloud.Firestore;
 using MoodJournal.Models;
 using Plugin.Maui.Calendar.Models;
+using MoodJournal.Services;
+
 
 #if ANDROID
 using Plugin.CloudFirestore;
@@ -13,16 +15,17 @@ namespace MoodJournal.Views;
 
 public partial class Calendario : ContentPage
 {
-    private readonly FirestoreDb _firestoreDb;
+   
     private readonly FirebaseAuthClient _authClient;
     private List<JournalEntry> _todasEntradas = new();
     public EventCollection EntradasCalendario { get; set; } = new();
+    private readonly IPersistenceStrategy _persistenceStrategy;
 
-    public Calendario(FirebaseAuthClient authClient, FirestoreDb firestoreDb = null)
+    public Calendario(FirebaseAuthClient authClient, IPersistenceStrategy persistenceStrategy)
     {
         InitializeComponent();
         _authClient = authClient;
-        _firestoreDb = firestoreDb;
+        _persistenceStrategy = persistenceStrategy;
        
         //La única manera de hacer funcionar 
         CalendarioControl.DayTappedCommand = new Command<DateTime>((fecha) =>
@@ -44,85 +47,33 @@ public partial class Calendario : ContentPage
             string uid = _authClient.User?.Uid;
             if (string.IsNullOrEmpty(uid)) return;
 
-            Query query = _firestoreDb.Collection("usuarios").Document(uid)
-                                      .Collection("entradas")
-                                      .OrderByDescending("fecha");
-
-            QuerySnapshot snapshot = await query.GetSnapshotAsync();
-
-            _todasEntradas.Clear();
+          
             var nuevasEntradas = new EventCollection();
+            _todasEntradas = await _persistenceStrategy.GetJournalEntriesAsync(uid);
 
-#if ANDROID
-            // --- LÓGICA ANDROID (Plugin.CloudFirestore) ---
-            var querySnapshot = await CrossCloudFirestore.Current
-                                        .Instance
-                                        .Collection("usuarios")
-                                        .Document(uid)
-                                        .Collection("entradas")
-                                        .OrderBy("fecha", descending: true)
-                                        .GetAsync();
-
-            foreach (var doc in querySnapshot.Documents)
-            {
-                var data = doc.Data;
-
-                var entry = new JournalEntry
-                {
-                    Id = doc.Id,
-                    Humor = data.ContainsKey("humor") ? data["humor"]?.ToString() : "indefinido",
-                    Contenido = data.ContainsKey("contenido") ? data["contenido"]?.ToString() : "",
-                    Fecha = data.ContainsKey("fecha")
-                        ? Convert.ToDateTime(data["fecha"])
-                        : DateTime.Now
-                };
-
-                _todasEntradas.Add(entry);
-
-                if (!nuevasEntradas.ContainsKey(entry.Fecha.Date))
-                {
-                    nuevasEntradas.Add(entry.Fecha.Date, new List<JournalEntry> { entry });
-                }
-            }
-#else
-            // --- LÓGICA WINDOWS (Google.Cloud.Firestore) ---
-            if (_firestoreDb != null)
-            {
-                Query busqueda = _firestoreDb.Collection("usuarios")
-                                          .Document(uid)
-                                          .Collection("entradas")
-                                          .OrderByDescending("fecha");
-
-                QuerySnapshot miSnapshot = await query.GetSnapshotAsync();
-                foreach (DocumentSnapshot doc in snapshot.Documents)
-                {
-                    Dictionary<string, object> data = doc.ToDictionary();
-
-                    var entry = new JournalEntry
-                    {
-                        Id = doc.Id,
-                        Humor = data.ContainsKey("humor") ? data["humor"]?.ToString() : "indefinido",
-                        Contenido = data.ContainsKey("contenido") ? data["contenido"]?.ToString() : "",
-                        Fecha = data.ContainsKey("fecha")
-                            ? ((Timestamp)data["fecha"]).ToDateTime()
-                            : DateTime.Now
-                    };
-
-                    _todasEntradas.Add(entry);
-
-                    if (!nuevasEntradas.ContainsKey(entry.Fecha.Date))
-                    {
-                        nuevasEntradas.Add(entry.Fecha.Date, new List<JournalEntry> { entry });
-                    }
-                }
-            }
-#endif
 
             EntradasCalendario = nuevasEntradas;
 
+            
+            foreach (var entrada in _todasEntradas)
+            {
+                // Usamos .Date para comparar solo el día, sin importar la hora exacta
+                DateTime fechaDia = entrada.Fecha.Date;
+
+                // Solo añadimos si esa fecha NO existe ya en la colección
+                if (!nuevasEntradas.ContainsKey(fechaDia))
+                {
+                    nuevasEntradas.Add(fechaDia, new List<string> { "Puntito" });
+                }
+                else
+                {
+                    // Si ya existe y quieres añadir más información al mismo día:
+                    var listaExistente = (List<string>)nuevasEntradas[fechaDia];
+                    listaExistente.Add("Otro puntito");
+                }
+            }
             // Forzamos al control a reconocer las entradas
             CalendarioControl.Events = EntradasCalendario;
-
             // Mostrar hoy por defecto al cargar
             ActualizarDetalleEntrada(DateTime.Today);
         }

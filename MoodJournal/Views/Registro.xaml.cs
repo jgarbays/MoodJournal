@@ -15,7 +15,7 @@ namespace MoodJournal
         private readonly FirestoreDb _firestoreDb;
 
         // 2. Constructor con Inyección de Dependencias
-        public Registro(FirebaseAuthClient authClient, FirestoreDb firestoreDb)
+        public Registro(FirebaseAuthClient authClient, FirestoreDb firestoreDb = null)
         {
             InitializeComponent();
             _firebaseAuthClient = authClient;

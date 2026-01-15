@@ -15,7 +15,7 @@ public partial class Ajustes : ContentPage
     private readonly FirestoreDb _firestoreDb;
     private bool _isInitializing = true; // <--- VITAL: Bloquea eventos al arrancar
 
-    public Ajustes(FirebaseAuthClient authClient, FirestoreDb firestoreDb)
+    public Ajustes(FirebaseAuthClient authClient, FirestoreDb firestoreDb=null)
     {
         InitializeComponent();
         _authClient = authClient;

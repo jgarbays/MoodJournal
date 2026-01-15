@@ -5,6 +5,8 @@ using Google.Cloud.Firestore;
 
 
 using MoodJournal.Models;
+using MoodJournal.Services;
+
 #if ANDROID
 using Plugin.CloudFirestore;
 #endif
@@ -14,14 +16,15 @@ namespace MoodJournal.Views;
 public partial class Estadisticas : ContentPage
 {
     private readonly FirebaseAuthClient _authClient;
-    private readonly FirestoreDb _firestoreDb;
     private List<JournalEntry> _entradas = new();
+    private readonly IPersistenceStrategy _persistenceStrategy;
 
-    public Estadisticas(FirebaseAuthClient authClient, FirestoreDb firestoreDb = null)
+    public Estadisticas(FirebaseAuthClient authClient, IPersistenceStrategy persistenceStrategy)
     {
         InitializeComponent();
         _authClient = authClient;
-        _firestoreDb = firestoreDb;
+        _persistenceStrategy = persistenceStrategy;
+        
     }
 
     // Usamos OnAppearing para que cargue los datos en cuanto entres a la página
@@ -38,61 +41,7 @@ public partial class Estadisticas : ContentPage
             string uid = _authClient.User?.Uid;
             if (string.IsNullOrEmpty(uid)) return;
 
-#if ANDROID
-            // --- LÓGICA PARA ANDROID (Plugin.CloudFirestore) ---
-            var querySnapshot = await CrossCloudFirestore.Current
-                                        .Instance
-                                        .Collection("usuarios")
-                                        .Document(uid)
-                                        .Collection("entradas")
-                                        .OrderBy("fecha", descending: true)
-                                        .GetAsync();
-
-            foreach (var doc in querySnapshot.Documents)
-            {
-                var data = doc.Data;
-
-                var entry = new JournalEntry
-                {
-                    Id = doc.Id,
-                    Humor = data.ContainsKey("humor") ? data["humor"]?.ToString() : "indefinido",
-                    Contenido = data.ContainsKey("contenido") ? data["contenido"]?.ToString() : "",
-                    Fecha = data.ContainsKey("fecha")
-                        ? Convert.ToDateTime(data["fecha"])
-                        : DateTime.Now
-                };
-
-                _entradas.Add(entry);
-            }
-#else
-            // --- LÓGICA PARA WINDOWS (Google.Cloud.Firestore) ---
-            if (_firestoreDb != null)
-            {
-                Query query = _firestoreDb.Collection("usuarios")
-                                          .Document(uid)
-                                          .Collection("entradas")
-                                          .OrderByDescending("fecha");
-
-                QuerySnapshot snapshot = await query.GetSnapshotAsync();
-
-                foreach (DocumentSnapshot doc in snapshot.Documents)
-                {
-                    Dictionary<string, object> data = doc.ToDictionary();
-
-                    var entry = new JournalEntry
-                    {
-                        Id = doc.Id,
-                        Humor = data.ContainsKey("humor") ? data["humor"]?.ToString() : "indefinido",
-                        Contenido = data.ContainsKey("contenido") ? data["contenido"]?.ToString() : "",
-                        Fecha = data.ContainsKey("fecha")
-                            ? ((Timestamp)data["fecha"]).ToDateTime()
-                            : DateTime.Now
-                    };
-
-                    _entradas.Add(entry);
-                }
-            }
-#endif
+_entradas = await _persistenceStrategy.GetJournalEntriesAsync(uid);
 
             if (_entradas.Any())
             {

@@ -3,7 +3,7 @@
                x:Class="MoodJournal.Views.MainPage"
              BackgroundColor="{DynamicResource FondoClaroAmarillento}">
                <!--BackgroundColor="{DynamicResource FondoClaroAmarillento}"-->
-             
+    <ScrollView>
     <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, *">
 
         <StackLayout x:Name="logo_container"
@@ -118,6 +118,6 @@
             </Label.GestureRecognizers>
         </Label>
     </Grid>
+    </ScrollView>
 
-   
 </ContentPage>
