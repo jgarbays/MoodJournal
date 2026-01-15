@@ -3,6 +3,9 @@ using System.Globalization;
 using Firebase.Auth;
 using Google.Cloud.Firestore;
 using Plugin.Maui.Calendar.Models;
+#if ANDROID
+using Plugin.CloudFirestore;
+#endif
 
 namespace MoodJournal.Views;
 
@@ -13,7 +16,7 @@ public partial class Calendario : ContentPage
     private List<JournalEntry> _todasEntradas = new();
     public EventCollection EntradasCalendario { get; set; } = new();
 
-    public Calendario(FirebaseAuthClient authClient, FirestoreDb firestoreDb)
+    public Calendario(FirebaseAuthClient authClient, FirestoreDb firestoreDb = null)
     {
         InitializeComponent();
         _authClient = authClient;
@@ -46,18 +49,30 @@ public partial class Calendario : ContentPage
             QuerySnapshot snapshot = await query.GetSnapshotAsync();
 
             _todasEntradas.Clear();
-            var nuevasEntradas = new EventCollection(); 
+            var nuevasEntradas = new EventCollection();
 
-            foreach (DocumentSnapshot doc in snapshot.Documents)
+#if ANDROID
+            // --- LÓGICA ANDROID (Plugin.CloudFirestore) ---
+            var querySnapshot = await CrossCloudFirestore.Current
+                                        .Instance
+                                        .Collection("usuarios")
+                                        .Document(uid)
+                                        .Collection("entradas")
+                                        .OrderBy("fecha", descending: true)
+                                        .GetAsync();
+
+            foreach (var doc in querySnapshot.Documents)
             {
-                Dictionary<string, object> data = doc.ToDictionary();
+                var data = doc.Data;
 
                 var entry = new JournalEntry
                 {
                     Id = doc.Id,
                     Humor = data.ContainsKey("humor") ? data["humor"]?.ToString() : "indefinido",
                     Contenido = data.ContainsKey("contenido") ? data["contenido"]?.ToString() : "",
-                    Fecha = data.ContainsKey("fecha") ? ((Timestamp)data["fecha"]).ToDateTime() : DateTime.Now
+                    Fecha = data.ContainsKey("fecha")
+                        ? Convert.ToDateTime(data["fecha"])
+                        : DateTime.Now
                 };
 
                 _todasEntradas.Add(entry);
@@ -67,6 +82,39 @@ public partial class Calendario : ContentPage
                     nuevasEntradas.Add(entry.Fecha.Date, new List<JournalEntry> { entry });
                 }
             }
+#else
+            // --- LÓGICA WINDOWS (Google.Cloud.Firestore) ---
+            if (_firestoreDb != null)
+            {
+                Query busqueda = _firestoreDb.Collection("usuarios")
+                                          .Document(uid)
+                                          .Collection("entradas")
+                                          .OrderByDescending("fecha");
+
+                QuerySnapshot miSnapshot = await query.GetSnapshotAsync();
+                foreach (DocumentSnapshot doc in snapshot.Documents)
+                {
+                    Dictionary<string, object> data = doc.ToDictionary();
+
+                    var entry = new JournalEntry
+                    {
+                        Id = doc.Id,
+                        Humor = data.ContainsKey("humor") ? data["humor"]?.ToString() : "indefinido",
+                        Contenido = data.ContainsKey("contenido") ? data["contenido"]?.ToString() : "",
+                        Fecha = data.ContainsKey("fecha")
+                            ? ((Timestamp)data["fecha"]).ToDateTime()
+                            : DateTime.Now
+                    };
+
+                    _todasEntradas.Add(entry);
+
+                    if (!nuevasEntradas.ContainsKey(entry.Fecha.Date))
+                    {
+                        nuevasEntradas.Add(entry.Fecha.Date, new List<JournalEntry> { entry });
+                    }
+                }
+            }
+#endif
 
             EntradasCalendario = nuevasEntradas;
 

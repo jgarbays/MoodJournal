@@ -74,13 +74,14 @@ Xamarin.AndroidX.Navigation.Common.dll
 Xamarin.AndroidX.Navigation.Fragment.dll
 Xamarin.AndroidX.Navigation.Runtime.dll
 Xamarin.AndroidX.Navigation.UI.dll
+Xamarin.AndroidX.NavigationEvent.Android.dll
+Xamarin.AndroidX.NavigationEvent.dll
 Xamarin.AndroidX.Print.dll
 Xamarin.AndroidX.ProfileInstaller.ProfileInstaller.dll
 Xamarin.AndroidX.RecyclerView.dll
 Xamarin.AndroidX.ResourceInspection.Annotation.dll
 Xamarin.AndroidX.SavedState.dll
 Xamarin.AndroidX.SavedState.SavedState.Android.dll
-Xamarin.AndroidX.SavedState.SavedState.Ktx.dll
 Xamarin.AndroidX.Security.SecurityCrypto.dll
 Xamarin.AndroidX.SlidingPaneLayout.dll
 Xamarin.AndroidX.Startup.StartupRuntime.dll
@@ -154,6 +155,8 @@ androidx.viewpager.viewpager.aar
 androidx.core.core-ktx.aar
 androidx.savedstate.savedstate-android.aar
 androidx.savedstate.savedstate.aar
+androidx.navigationevent.navigationevent-android.aar
+androidx.navigationevent.navigationevent.aar
 androidx.lifecycle.lifecycle-viewmodel-android.aar
 androidx.lifecycle.lifecycle-viewmodel.aar
 androidx.lifecycle.lifecycle-livedata-core.aar
@@ -189,7 +192,6 @@ androidx.window.window.aar
 androidx.swiperefreshlayout.swiperefreshlayout.aar
 androidx.slidingpanelayout.slidingpanelayout.aar
 androidx.security.security-crypto.aar
-androidx.savedstate.savedstate-ktx.aar
 androidx.lifecycle.lifecycle-viewmodel-ktx.aar
 androidx.lifecycle.lifecycle-runtime-ktx-android.aar
 androidx.lifecycle.lifecycle-runtime-ktx.aar
@@ -231,7 +233,7 @@ Xamarin.KotlinX.Coroutines.Core.aar
 Xamarin.KotlinX.Coroutines.Core.Jvm.aar
 Xamarin.KotlinX.Serialization.Core.aar
 Xamarin.KotlinX.Serialization.Core.Jvm.aar
-playservicesbasement-18.7.1.aar
+playservicesbasement-18.9.0.aar
 playservicestasks-18.3.2.aar
 playservicesstats-17.0.1.aar
 playservicesbase-18.7.2.aar

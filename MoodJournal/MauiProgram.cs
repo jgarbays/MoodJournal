@@ -4,6 +4,7 @@ using Firebase.Auth.Providers;
 using Google.Cloud.Firestore;
 using Plugin.LocalNotification;
 using Microcharts.Maui;
+using Plugin.CloudFirestore;
 
 
 namespace MoodJournal
@@ -41,22 +42,17 @@ namespace MoodJournal
                 Providers = [new EmailProvider()]
             }));
 
-            // 2. REGISTRO de FirestoreDb
+            // 2. REGISTRO de FirestoreDb si es windows
+#if WINDOWS
             builder.Services.AddSingleton<FirestoreDb>(sp =>
             {
-                try
-                {
-                    // En Android, Firestore suele requerir que el SDK de Firebase esté listo
-                    // Si no tienes el archivo de credenciales JSON de cuenta de servicio,
-                    // esta librería de Google Cloud puede fallar en móvil.
-                    return FirestoreDb.Create(projectId);
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Error creando Firestore: {ex.Message}");
-                    return null; // Evita que la app explote al arrancar
-                }
+                // Solo se ejecuta en PC
+                return FirestoreDb.Create(projectId);
             });
+#elif ANDROID
+    // En Android usamos el CrossCloudFirestore del plugin nativo
+    builder.Services.AddSingleton<IFirestore>(sp => CrossCloudFirestore.Current.Instance);
+#endif
 
 
 

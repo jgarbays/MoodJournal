@@ -14,7 +14,7 @@ public partial class Historial : ContentPage
     public ObservableCollection<JournalEntry> Entradas { get; set; } = new();
     private List<JournalEntry> _todasLasEntradas = new();
 
-    public Historial(FirebaseAuthClient authClient, FirestoreDb firestoreDb)
+    public Historial(FirebaseAuthClient authClient, FirestoreDb firestoreDb = null)
     {
         InitializeComponent();
         _authClient = authClient;
@@ -28,6 +28,7 @@ public partial class Historial : ContentPage
     {
         try
         {
+
             string uid = _authClient.User.Uid;
             _todasLasEntradas.Clear();
             Entradas.Clear();

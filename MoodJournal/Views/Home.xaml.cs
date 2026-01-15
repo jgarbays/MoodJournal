@@ -2,6 +2,11 @@ using Firebase.Auth;
 using Google.Cloud.Firestore;
 using MoodJournal.Views;
 
+// Añadimos el namespace para Android
+#if ANDROID
+using Plugin.CloudFirestore;
+#endif
+
 namespace MoodJournal.Views;
 
 public partial class Home : ContentPage
@@ -9,14 +14,14 @@ public partial class Home : ContentPage
     private readonly FirebaseAuthClient _authClient;
     private readonly FirestoreDb _firestoreDb;
 
-    public Home(FirebaseAuthClient authClient, FirestoreDb firestoreDb)
+    // 1. EL CAMBIO VITAL: Añadimos "= null" al final de FirestoreDb
+    public Home(FirebaseAuthClient authClient, FirestoreDb firestoreDb = null)
     {
         InitializeComponent();
         _authClient = authClient;
         _firestoreDb = firestoreDb;
     }
 
-    // OnAppearing se ejecuta cada vez que la pantalla se vuelve visible
     protected override async void OnAppearing()
     {
         base.OnAppearing();
@@ -30,14 +35,42 @@ public partial class Home : ContentPage
             var user = _authClient.User;
             if (user != null)
             {
-                // Buscamos en la colección "usuarios" el documento que tiene el ID del usuario actual
-                DocumentReference docRef = _firestoreDb.Collection("usuarios").Document(user.Uid);
-                DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+                string nombre = string.Empty;
+
+                // 2. LÓGICA HÍBRIDA PARA LEER DATOS
+#if ANDROID
+                // Uso del Plugin nativo para Android
+                var snapshot = await Plugin.CloudFirestore.CrossCloudFirestore.Current.Instance
+                                   .Collection("usuarios")
+                                   .Document(user.Uid)
+                                   .GetAsync();
 
                 if (snapshot.Exists)
                 {
-                    // Obtenemos el campo "nombre_usuario" que guardamos en el Registro
-                    string nombre = snapshot.GetValue<string>("nombre_usuario");
+                    // En el plugin de Android se usa ToObject o se accede al diccionario Data
+                    // Si guardaste el campo como "nombre_usuario", lo obtenemos así:
+                    var datos = snapshot.Data;
+                    if (datos != null && datos.ContainsKey("nombre_usuario"))
+                    {
+                        nombre = datos["nombre_usuario"]?.ToString();
+                    }
+                }
+#else
+                // Uso de la librería de Google Cloud para Windows
+                if (_firestoreDb != null)
+                {
+                    DocumentReference docRef = _firestoreDb.Collection("usuarios").Document(user.Uid);
+                    DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+                    if (snapshot.Exists)
+                    {
+                        nombre = snapshot.GetValue<string>("nombre_usuario");
+                        text_welcome.Text = $"hola, \n{nombre}!";
+                    }
+                }
+#endif
+
+                if (!string.IsNullOrEmpty(nombre))
+                {
                     text_welcome.Text = $"hola, \n{nombre}!";
                 }
                 else
@@ -48,16 +81,16 @@ public partial class Home : ContentPage
         }
         catch (Exception ex)
         {
-            // Si algo falla, ponemos un saludo genérico para que la app no se cierre
             text_welcome.Text = "hola!";
             System.Diagnostics.Debug.WriteLine($"Error cargando nombre: {ex.Message}");
         }
     }
 
+    // --- Los demás métodos de navegación se mantienen igual ---
+
     private async void OnLogoutButtonClicked(object sender, EventArgs e)
     {
         bool answer = await DisplayAlert("Cerrar sesión", "¿Estás seguro de que quieres salir?", "Sí", "No");
-
         if (answer)
         {
             try
@@ -89,22 +122,17 @@ public partial class Home : ContentPage
 
     private async void OnEstadisticasClicked(object sender, EventArgs e)
     {
-    
-            await Shell.Current.GoToAsync("Estadisticas");
-        
+        await Shell.Current.GoToAsync("Estadisticas");
     }
 
     private async void OnCalendarioClicked(object sender, EventArgs e)
     {
-
         await Shell.Current.GoToAsync("Calendario");
-
     }
 
     private async void OnPerfilClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("Perfil");
     }
-
 
 }

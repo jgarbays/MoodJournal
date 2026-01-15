@@ -2,7 +2,10 @@ using Firebase.Auth;
 using Google.Cloud.Firestore;
 using System;
 using Microsoft.Maui.Controls;
-using Firebase.Storage; 
+using Firebase.Storage;
+#if ANDROID
+using Plugin.CloudFirestore;
+#endif
 
 namespace MoodJournal.Views
 {
@@ -12,7 +15,7 @@ namespace MoodJournal.Views
         private readonly FirebaseAuthClient _firebaseAuthClient;
         private readonly FirestoreDb _firestoreDb;
 
-        public Perfil(FirebaseAuthClient authClient, FirestoreDb firestoreDb)
+        public Perfil(FirebaseAuthClient authClient, FirestoreDb firestoreDb = null)
         {
             InitializeComponent();
             _firebaseAuthClient = authClient;
@@ -33,6 +36,7 @@ namespace MoodJournal.Views
         {
             try
             {
+
                 // Obtenemos el usuario actual de Firebase Auth
                 var user = _firebaseAuthClient.User;
 
@@ -40,40 +44,103 @@ namespace MoodJournal.Views
                 {
                     string userId = user.Uid;
 
-                    // 2. Leer datos desde la colección "usuarios" en Firestore
-                    DocumentReference docRef = _firestoreDb.Collection("usuarios").Document(userId);
-                    DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+#if ANDROID
+                    // =======================
+                    // ANDROID
+                    // =======================
 
+                    // Accedemos a Firestore usando el plugin nativo
+                    var snapshot = await CrossCloudFirestore.Current
+                                            .Instance
+                                            .Collection("usuarios")   // Colección usuarios
+                                            .Document(userId)         // Documento del usuario
+                                            .GetAsync();              // Obtenemos el documento
+
+                    // Verificamos que el documento existe
                     if (snapshot.Exists)
                     {
-                        // Convertimos el documento a un diccionario
-                        Dictionary<string, object> userData = snapshot.ToDictionary();
+                        // Diccionario con los datos del usuario
+                        var userData = snapshot.Data;
 
-                        // 3. Actualizar la interfaz con los datos de Firestore
-                        // Usamos los mismos nombres de campo definidos en el Registro
+                        // Nombre del usuario
                         NombreLabel.Text = userData.ContainsKey("nombre_usuario")
-                            ? userData["nombre_usuario"].ToString()
+                            ? userData["nombre_usuario"]?.ToString()
                             : "Usuario";
 
+                        // Email (Firestore o Auth como respaldo)
                         EmailLabel.Text = userData.ContainsKey("email")
-                            ? userData["email"].ToString()
+                            ? userData["email"]?.ToString()
                             : user.Info.Email;
 
-                        // Datos adicionales que el usuario editará
+                        // Teléfono
                         TelefonoLabel.Text = userData.ContainsKey("telefono")
-                            ? userData["telefono"].ToString()
+                            ? userData["telefono"]?.ToString()
                             : "No definido";
 
+                        // Fecha de nacimiento
                         FechaNacimientoLabel.Text = userData.ContainsKey("fecha_nacimiento")
-                            ? userData["fecha_nacimiento"].ToString()
+                            ? userData["fecha_nacimiento"]?.ToString()
                             : "No definido";
 
-                        // Si existe una URL de la foto en Firestore
+                        // Foto de perfil (URL)
                         if (userData.ContainsKey("foto_url"))
                         {
-                            ProfileImage.Source = userData["foto_url"].ToString();
+                            ProfileImage.Source = userData["foto_url"]?.ToString();
                         }
                     }
+
+#else
+                // =======================
+                // WINDOWS
+                // =======================
+
+                // Nos aseguramos de que Firestore esté disponible
+                if (_firestoreDb != null)
+                {
+                    // Referencia al documento del usuario
+                    DocumentReference docRef =
+                        _firestoreDb.Collection("usuarios")
+                                    .Document(userId);
+
+                    // Obtenemos el documento desde Firestore
+                    DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+
+                    // Verificamos que el documento existe
+                    if (snapshot.Exists)
+                    {
+                        // Convertimos el documento a diccionario
+                        Dictionary<string, object> userData =
+                            snapshot.ToDictionary();
+
+                        // Nombre del usuario
+                        NombreLabel.Text = userData.ContainsKey("nombre_usuario")
+                            ? userData["nombre_usuario"]?.ToString()
+                            : "Usuario";
+
+                        // Email
+                        EmailLabel.Text = userData.ContainsKey("email")
+                            ? userData["email"]?.ToString()
+                            : user.Info.Email;
+
+                        // Teléfono
+                        TelefonoLabel.Text = userData.ContainsKey("telefono")
+                            ? userData["telefono"]?.ToString()
+                            : "No definido";
+
+                        // Fecha de nacimiento
+                        FechaNacimientoLabel.Text = userData.ContainsKey("fecha_nacimiento")
+                            ? userData["fecha_nacimiento"]?.ToString()
+                            : "No definido";
+
+                        // Foto de perfil
+                        if (userData.ContainsKey("foto_url"))
+                        {
+                            ProfileImage.Source =
+                                userData["foto_url"]?.ToString();
+                        }
+                    }
+                }
+#endif
                 }
             }
             catch (Exception ex)
@@ -129,14 +196,28 @@ namespace MoodJournal.Views
 
                     // 5. Actualizar Firestore con la nueva URL
                     string uid = _firebaseAuthClient.User.Uid; // Obtiene el ID del usuario
-                    DocumentReference docRef = _firestoreDb.Collection("usuarios").Document(uid); // Obtiene el documento asociado a este ID
-
-                    await docRef.UpdateAsync("foto_url", downloadUrl); // actualiza este documento
-
-                    // 6. Actualizar la imagen en la pantalla
-                    ProfileImage.Source = ImageSource.FromUri(new Uri(downloadUrl));
-
-                    await DisplayAlert("Éxito", "Foto de perfil actualizada", "OK");
+#if ANDROID
+                    // --- ANDROID (Plugin.CloudFirestore) ---
+                    // Acceder a la instancia del plugin nativo
+                    await CrossCloudFirestore.Current
+                        .Instance
+                        .Collection("usuarios")
+                        .Document(uid)
+                        //Recibe un diccionario de campos
+                        .UpdateAsync(new Dictionary<string, object>
+                        {
+        { "foto_url", downloadUrl } //Actualiza solo el campo que contiene la url de la foto
+                        });
+#else
+// --- WINDOWS (Google.Cloud.Firestore) ---
+if (_firestoreDb != null)
+{   //Creamos referencia al documento de usuario
+    DocumentReference docRef =
+        _firestoreDb.Collection("usuarios").Document(uid);
+    //Actualizamos el campo de la url de la foto de este documento con la nueva url
+    await docRef.UpdateAsync("foto_url", downloadUrl);
+}
+#endif
                 }
             }
             catch (Exception ex)

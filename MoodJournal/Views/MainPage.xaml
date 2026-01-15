@@ -79,8 +79,8 @@
                 BackgroundColor="{DynamicResource ColorPrincipalNaranja}"
                 HorizontalOptions="FillAndExpand"
                 Margin="40, 8, 40, 0"
-                Clicked="OnLoginButtonClicked">>
-            
+                Clicked="OnLoginButtonClicked">
+
         </Button>
 
         <Grid Grid.Row="4"

@@ -913,6 +913,9 @@ com.bumptech.glide.gifdecoder.GifDecoder;com.bumptech.glide.gifdecoder.GifDecode
 AndroidX.Activity.BackEventCompat+ISwipeEdge, Xamarin.AndroidX.Activity;androidx.activity.BackEventCompat$SwipeEdge
 AndroidX.Activity.BackEventCompat.ISwipeEdge;androidx.activity.BackEventCompat$SwipeEdge
 androidx.activity.BackEventCompat$SwipeEdge;androidx.activity.BackEventCompat$SwipeEdge
+AndroidX.Activity.IExperimentalActivityApi, Xamarin.AndroidX.Activity;androidx.activity.ExperimentalActivityApi
+AndroidX.Activity.IExperimentalActivityApi;androidx.activity.ExperimentalActivityApi
+androidx.activity.ExperimentalActivityApi;androidx.activity.ExperimentalActivityApi
 AndroidX.Activity.IFullyDrawnReporterOwner, Xamarin.AndroidX.Activity;androidx.activity.FullyDrawnReporterOwner
 AndroidX.Activity.IFullyDrawnReporterOwner;androidx.activity.FullyDrawnReporterOwner
 androidx.activity.FullyDrawnReporterOwner;androidx.activity.FullyDrawnReporterOwner
@@ -928,6 +931,9 @@ androidx.activity.result.ActivityResultCaller;androidx.activity.result.ActivityR
 AndroidX.Activity.Result.IActivityResultRegistryOwner, Xamarin.AndroidX.Activity;androidx.activity.result.ActivityResultRegistryOwner
 AndroidX.Activity.Result.IActivityResultRegistryOwner;androidx.activity.result.ActivityResultRegistryOwner
 androidx.activity.result.ActivityResultRegistryOwner;androidx.activity.result.ActivityResultRegistryOwner
+AndroidX.Activity.Result.Contract.ActivityResultContracts+PickVisualMedia+MediaCapabilities+Companion+IHdrType, Xamarin.AndroidX.Activity;androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$MediaCapabilities$Companion$HdrType
+AndroidX.Activity.Result.Contract.ActivityResultContracts.PickVisualMedia.MediaCapabilities.Companion.IHdrType;androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$MediaCapabilities$Companion$HdrType
+androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$MediaCapabilities$Companion$HdrType;androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$MediaCapabilities$Companion$HdrType
 AndroidX.Activity.Result.Contract.ActivityResultContracts+PickVisualMedia+IVisualMediaType, Xamarin.AndroidX.Activity;androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$VisualMediaType
 AndroidX.Activity.Result.Contract.ActivityResultContracts.PickVisualMedia.IVisualMediaType;androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$VisualMediaType
 androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$VisualMediaType;androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$VisualMediaType
@@ -2209,6 +2215,21 @@ mono.androidx.navigation.ui.AppBarConfiguration_OnNavigateUpListenerImplementor;
 AndroidX.Navigation.UI.INavigationUiSaveStateControl, Xamarin.AndroidX.Navigation.UI;androidx.navigation.ui.NavigationUiSaveStateControl
 AndroidX.Navigation.UI.INavigationUiSaveStateControl;androidx.navigation.ui.NavigationUiSaveStateControl
 androidx.navigation.ui.NavigationUiSaveStateControl;androidx.navigation.ui.NavigationUiSaveStateControl
+AndroidX.NavigationEvent.INavigationEventDispatcherOwner, Xamarin.AndroidX.NavigationEvent.Android;androidx.navigationevent.NavigationEventDispatcherOwner
+AndroidX.NavigationEvent.INavigationEventDispatcherOwner;androidx.navigationevent.NavigationEventDispatcherOwner
+androidx.navigationevent.NavigationEventDispatcherOwner;androidx.navigationevent.NavigationEventDispatcherOwner
+AndroidX.NavigationEvent.IOnBackCompletedFallback, Xamarin.AndroidX.NavigationEvent.Android;androidx.navigationevent.OnBackCompletedFallback
+AndroidX.NavigationEvent.IOnBackCompletedFallback;androidx.navigationevent.OnBackCompletedFallback
+androidx.navigationevent.OnBackCompletedFallback;androidx.navigationevent.OnBackCompletedFallback
+AndroidX.NavigationEvent.NavigationEvent+ISwipeEdge, Xamarin.AndroidX.NavigationEvent.Android;androidx.navigationevent.NavigationEvent$SwipeEdge
+AndroidX.NavigationEvent.NavigationEvent.ISwipeEdge;androidx.navigationevent.NavigationEvent$SwipeEdge
+androidx.navigationevent.NavigationEvent$SwipeEdge;androidx.navigationevent.NavigationEvent$SwipeEdge
+AndroidX.NavigationEvent.NavigationEventDispatcher+IPriority, Xamarin.AndroidX.NavigationEvent.Android;androidx.navigationevent.NavigationEventDispatcher$Priority
+AndroidX.NavigationEvent.NavigationEventDispatcher.IPriority;androidx.navigationevent.NavigationEventDispatcher$Priority
+androidx.navigationevent.NavigationEventDispatcher$Priority;androidx.navigationevent.NavigationEventDispatcher$Priority
+AndroidX.NavigationEvent.NavigationEventTransitionState+IDirection, Xamarin.AndroidX.NavigationEvent.Android;androidx.navigationevent.NavigationEventTransitionState$Direction
+AndroidX.NavigationEvent.NavigationEventTransitionState.IDirection;androidx.navigationevent.NavigationEventTransitionState$Direction
+androidx.navigationevent.NavigationEventTransitionState$Direction;androidx.navigationevent.NavigationEventTransitionState$Direction
 AndroidX.Print.PrintHelper+IOnPrintFinishCallback, Xamarin.AndroidX.Print;androidx.print.PrintHelper$OnPrintFinishCallback
 AndroidX.Print.PrintHelper.IOnPrintFinishCallback;androidx.print.PrintHelper$OnPrintFinishCallback
 androidx.print.PrintHelper$OnPrintFinishCallback;androidx.print.PrintHelper$OnPrintFinishCallback
@@ -4570,6 +4591,9 @@ kotlin.DeprecatedSinceKotlin;kotlin.DeprecatedSinceKotlin
 Kotlin.IDslMarker, Xamarin.Kotlin.StdLib;kotlin.DslMarker
 Kotlin.IDslMarker;kotlin.DslMarker
 kotlin.DslMarker;kotlin.DslMarker
+Kotlin.IExperimentalContextParameters, Xamarin.Kotlin.StdLib;kotlin.ExperimentalContextParameters
+Kotlin.IExperimentalContextParameters;kotlin.ExperimentalContextParameters
+kotlin.ExperimentalContextParameters;kotlin.ExperimentalContextParameters
 Kotlin.IExperimentalMultiplatform, Xamarin.Kotlin.StdLib;kotlin.ExperimentalMultiplatform
 Kotlin.IExperimentalMultiplatform;kotlin.ExperimentalMultiplatform
 kotlin.ExperimentalMultiplatform;kotlin.ExperimentalMultiplatform
@@ -4600,9 +4624,9 @@ kotlin.Lazy;kotlin.Lazy
 Kotlin.IMetadata, Xamarin.Kotlin.StdLib;kotlin.Metadata
 Kotlin.IMetadata;kotlin.Metadata
 kotlin.Metadata;kotlin.Metadata
-Kotlin.IMustUseReturnValue, Xamarin.Kotlin.StdLib;kotlin.MustUseReturnValue
-Kotlin.IMustUseReturnValue;kotlin.MustUseReturnValue
-kotlin.MustUseReturnValue;kotlin.MustUseReturnValue
+Kotlin.IMustUseReturnValues, Xamarin.Kotlin.StdLib;kotlin.MustUseReturnValues
+Kotlin.IMustUseReturnValues;kotlin.MustUseReturnValues
+kotlin.MustUseReturnValues;kotlin.MustUseReturnValues
 Kotlin.IOptIn, Xamarin.Kotlin.StdLib;kotlin.OptIn
 Kotlin.IOptIn;kotlin.OptIn
 kotlin.OptIn;kotlin.OptIn
@@ -4957,6 +4981,9 @@ kotlin.js.ExperimentalJsReflectionCreateInstance;kotlin.js.ExperimentalJsReflect
 Kotlin.JS.IExperimentalJsStatic, Xamarin.Kotlin.StdLib;kotlin.js.ExperimentalJsStatic
 Kotlin.JS.IExperimentalJsStatic;kotlin.js.ExperimentalJsStatic
 kotlin.js.ExperimentalJsStatic;kotlin.js.ExperimentalJsStatic
+Kotlin.JS.IJsImplicitExport, Xamarin.Kotlin.StdLib;kotlin.js.JsImplicitExport
+Kotlin.JS.IJsImplicitExport;kotlin.js.JsImplicitExport
+kotlin.js.JsImplicitExport;kotlin.js.JsImplicitExport
 Kotlin.IO.Path.ICopyActionContext, Xamarin.Kotlin.StdLib;kotlin.io.path.CopyActionContext
 Kotlin.IO.Path.ICopyActionContext;kotlin.io.path.CopyActionContext
 kotlin.io.path.CopyActionContext;kotlin.io.path.CopyActionContext
@@ -5023,6 +5050,12 @@ kotlin.contracts.Effect;kotlin.contracts.Effect
 Kotlin.Contracts.IExperimentalContracts, Xamarin.Kotlin.StdLib;kotlin.contracts.ExperimentalContracts
 Kotlin.Contracts.IExperimentalContracts;kotlin.contracts.ExperimentalContracts
 kotlin.contracts.ExperimentalContracts;kotlin.contracts.ExperimentalContracts
+Kotlin.Contracts.IExperimentalExtendedContracts, Xamarin.Kotlin.StdLib;kotlin.contracts.ExperimentalExtendedContracts
+Kotlin.Contracts.IExperimentalExtendedContracts;kotlin.contracts.ExperimentalExtendedContracts
+kotlin.contracts.ExperimentalExtendedContracts;kotlin.contracts.ExperimentalExtendedContracts
+Kotlin.Contracts.IHoldsIn, Xamarin.Kotlin.StdLib;kotlin.contracts.HoldsIn
+Kotlin.Contracts.IHoldsIn;kotlin.contracts.HoldsIn
+kotlin.contracts.HoldsIn;kotlin.contracts.HoldsIn
 Kotlin.Contracts.IReturns, Xamarin.Kotlin.StdLib;kotlin.contracts.Returns
 Kotlin.Contracts.IReturns;kotlin.contracts.Returns
 kotlin.contracts.Returns;kotlin.contracts.Returns

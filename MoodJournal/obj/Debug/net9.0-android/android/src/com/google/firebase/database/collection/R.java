@@ -155,7 +155,7 @@ public final class R {
 		public static final int time = 0x7f0801f2;
 		public static final int title = 0x7f0801f3;
 		public static final int top = 0x7f0801f7;
-		public static final int wide = 0x7f080217;
+		public static final int wide = 0x7f080218;
 	}
 	public static final class integer {
 		public static final int google_play_services_version = 0x7f090009;

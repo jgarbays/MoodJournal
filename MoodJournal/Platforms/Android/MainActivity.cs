@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using Firebase; // Asegúrate de tener el NuGet Xamarin.Firebase.Common
+using Firebase; // SDK Nativo
 
 namespace MoodJournal;
 
@@ -10,8 +10,13 @@ public class MainActivity : MauiAppCompatActivity
 {
     protected override void OnCreate(Bundle? savedInstanceState)
     {
-        // Esta es la pieza que falta para que el APK de Release no se cierre
-        FirebaseApp.InitializeApp(this);
+        // 1. La inicialización de Firebase debe ir ANTES del base.OnCreate
+        // Pero es buena práctica verificar si ya está inicializado para evitar excepciones
+        if (FirebaseApp.Instance == null)
+        {
+            FirebaseApp.InitializeApp(this);
+        }
+
         base.OnCreate(savedInstanceState);
     }
 }

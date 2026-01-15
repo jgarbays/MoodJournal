@@ -794,10 +794,10 @@ public final class R {
 		public static final int uniform = 0x7f080207;
 		public static final int up = 0x7f080209;
 		public static final int view_tree_lifecycle_owner = 0x7f080210;
-		public static final int view_tree_saved_state_registry_owner = 0x7f080212;
-		public static final int view_tree_view_model_store_owner = 0x7f080213;
-		public static final int visible_removing_fragment_view_tag = 0x7f080215;
-		public static final int wrap_content = 0x7f08021c;
+		public static final int view_tree_saved_state_registry_owner = 0x7f080213;
+		public static final int view_tree_view_model_store_owner = 0x7f080214;
+		public static final int visible_removing_fragment_view_tag = 0x7f080216;
+		public static final int wrap_content = 0x7f08021d;
 	}
 	public static final class integer {
 		public static final int abc_config_activityDefaultDur = 0x7f090000;

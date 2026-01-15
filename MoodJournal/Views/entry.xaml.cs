@@ -14,7 +14,7 @@ public partial class entry : ContentPage
     private readonly FirestoreDb _firestoreDb;
     private string _selectedMood = ""; // Para guardar el humor elegido
 
-    public entry(FirebaseAuthClient authClient, FirestoreDb firestoreDb)
+    public entry(FirebaseAuthClient authClient, FirestoreDb firestoreDb = null)
     {
         InitializeComponent();
         _authClient = authClient;
@@ -86,6 +86,9 @@ public partial class entry : ContentPage
             // 2. Ejecución condicional según plataforma
 #if ANDROID
             // Lógica para ANDROID (Plugin nativo)
+            
+            var bcd = CrossCloudFirestore.Current.Instance.Collection("usuarios").Document(uid)
+                                     .Collection("entradas");
             await CrossCloudFirestore.Current
                                      .Instance
                                      .Collection("usuarios")

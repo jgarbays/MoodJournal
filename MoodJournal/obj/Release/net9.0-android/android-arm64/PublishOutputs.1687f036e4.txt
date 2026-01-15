@@ -1,3 +1,0 @@
-C:\Users\Cristina\Desktop\MoodJournal\MoodJournal\bin\Release\net9.0-android\android-arm64\publish\com.companyname.moodjournal-Signed.apk
-C:\Users\Cristina\Desktop\MoodJournal\MoodJournal\bin\Release\net9.0-android\android-arm64\publish\com.companyname.moodjournal.apk
-C:\Users\Cristina\Desktop\MoodJournal\MoodJournal\bin\Release\net9.0-android\android-arm64\publish\_Microsoft.Android.Resource.Designer.dll

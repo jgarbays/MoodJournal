@@ -1,7 +1,28 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\cristina\\desktop\\moodjournal\\moodjournal\\views\\perfil.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\views\\perfil.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\cristina\\desktop\\moodjournal\\moodjournal\\moodjournal.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\moodjournal.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\cristina\\desktop\\moodjournal\\moodjournal\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\cristina\\desktop\\moodjournal\\moodjournal\\platforms\\android\\mainactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\platforms\\android\\mainactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\cristina\\desktop\\moodjournal\\moodjournal\\views\\historial.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\views\\historial.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 1,
@@ -9,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -18,6 +39,68 @@
             {
               "$type": "Bookmark",
               "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MoodJournal.csproj",
+              "DocumentMoniker": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\MoodJournal.csproj",
+              "RelativeDocumentMoniker": "MoodJournal\\MoodJournal.csproj",
+              "ToolTip": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\MoodJournal.csproj",
+              "RelativeToolTip": "MoodJournal\\MoodJournal.csproj",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAAD0AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-01-15T13:29:52.832Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainActivity.cs",
+              "DocumentMoniker": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\Platforms\\Android\\MainActivity.cs",
+              "RelativeDocumentMoniker": "MoodJournal\\Platforms\\Android\\MainActivity.cs",
+              "ToolTip": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\Platforms\\Android\\MainActivity.cs",
+              "RelativeToolTip": "MoodJournal\\Platforms\\Android\\MainActivity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T13:19:33.551Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Perfil.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\Views\\Perfil.xaml.cs",
+              "RelativeDocumentMoniker": "MoodJournal\\Views\\Perfil.xaml.cs",
+              "ToolTip": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\Views\\Perfil.xaml.cs",
+              "RelativeToolTip": "MoodJournal\\Views\\Perfil.xaml.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAjwCgAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T13:01:00.001Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Historial.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\Views\\Historial.xaml.cs",
+              "RelativeDocumentMoniker": "MoodJournal\\Views\\Historial.xaml.cs",
+              "ToolTip": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\Views\\Historial.xaml.cs",
+              "RelativeToolTip": "MoodJournal\\Views\\Historial.xaml.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAwwFkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T08:30:55.284Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MauiProgram.cs",
+              "DocumentMoniker": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\MauiProgram.cs",
+              "RelativeDocumentMoniker": "MoodJournal\\MauiProgram.cs",
+              "ToolTip": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\MauiProgram.cs",
+              "RelativeToolTip": "MoodJournal\\MauiProgram.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T13:42:55.116Z"
             }
           ]
         }

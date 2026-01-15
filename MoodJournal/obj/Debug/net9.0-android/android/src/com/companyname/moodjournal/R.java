@@ -12511,21 +12511,22 @@ public final class R {
     public static final int view_transition=0x7f08020e;
     public static final int view_tree_disjoint_parent=0x7f08020f;
     public static final int view_tree_lifecycle_owner=0x7f080210;
-    public static final int view_tree_on_back_pressed_dispatcher_owner=0x7f080211;
-    public static final int view_tree_saved_state_registry_owner=0x7f080212;
-    public static final int view_tree_view_model_store_owner=0x7f080213;
-    public static final int visible=0x7f080214;
-    public static final int visible_removing_fragment_view_tag=0x7f080215;
-    public static final int west=0x7f080216;
-    public static final int wide=0x7f080217;
-    public static final int withText=0x7f080218;
-    public static final int with_icon=0x7f080219;
-    public static final int withinBounds=0x7f08021a;
-    public static final int wrap=0x7f08021b;
-    public static final int wrap_content=0x7f08021c;
-    public static final int wrap_content_constrained=0x7f08021d;
-    public static final int x_left=0x7f08021e;
-    public static final int x_right=0x7f08021f;
+    public static final int view_tree_navigation_event_dispatcher_owner=0x7f080211;
+    public static final int view_tree_on_back_pressed_dispatcher_owner=0x7f080212;
+    public static final int view_tree_saved_state_registry_owner=0x7f080213;
+    public static final int view_tree_view_model_store_owner=0x7f080214;
+    public static final int visible=0x7f080215;
+    public static final int visible_removing_fragment_view_tag=0x7f080216;
+    public static final int west=0x7f080217;
+    public static final int wide=0x7f080218;
+    public static final int withText=0x7f080219;
+    public static final int with_icon=0x7f08021a;
+    public static final int withinBounds=0x7f08021b;
+    public static final int wrap=0x7f08021c;
+    public static final int wrap_content=0x7f08021d;
+    public static final int wrap_content_constrained=0x7f08021e;
+    public static final int x_left=0x7f08021f;
+    public static final int x_right=0x7f080220;
   }
   public static final class integer {
     public static final int abc_config_activityDefaultDur=0x7f090000;
