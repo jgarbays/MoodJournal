@@ -2,7 +2,9 @@
 using System.Globalization;
 using Firebase.Auth;
 using Google.Cloud.Firestore;
+using MoodJournal.Models;
 using Plugin.Maui.Calendar.Models;
+
 #if ANDROID
 using Plugin.CloudFirestore;
 #endif

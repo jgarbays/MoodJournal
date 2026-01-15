@@ -1,3 +1,5 @@
+using MoodJournal.Models;
+
 namespace MoodJournal.Views;
 
 public partial class DetalleEntrada : ContentPage

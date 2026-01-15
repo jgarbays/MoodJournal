@@ -2,6 +2,9 @@
 using SkiaSharp;
 using Firebase.Auth;
 using Google.Cloud.Firestore;
+
+
+using MoodJournal.Models;
 #if ANDROID
 using Plugin.CloudFirestore;
 #endif

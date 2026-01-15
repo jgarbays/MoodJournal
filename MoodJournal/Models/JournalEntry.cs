@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MoodJournal.Views;
-
-public class JournalEntry
+﻿namespace MoodJournal.Models;
+    public class JournalEntry
 {
     public string Id { get; set; }
     private string _humor;

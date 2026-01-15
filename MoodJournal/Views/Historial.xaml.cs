@@ -1,6 +1,10 @@
 using Google.Cloud.Firestore;
 using Firebase.Auth;
 using System.Collections.ObjectModel;
+using MoodJournal.Models;
+using MoodJournal.Services;
+
+
 #if ANDROID
 using Plugin.CloudFirestore;
 #endif
@@ -9,16 +13,16 @@ namespace MoodJournal.Views;
 
 public partial class Historial : ContentPage
 {
-    private readonly FirestoreDb _firestoreDb;
+    private ObservableCollection<JournalEntry> Entradas { get; set; } = [];
+    private List<JournalEntry> _todasLasEntradas = [];
     private readonly FirebaseAuthClient _authClient;
-    public ObservableCollection<JournalEntry> Entradas { get; set; } = new();
-    private List<JournalEntry> _todasLasEntradas = new();
+    private readonly IPersistenceStrategy _persistenceStrategy;
 
-    public Historial(FirebaseAuthClient authClient, FirestoreDb firestoreDb = null)
+    public Historial(IPersistenceStrategy persistenceStrategy, FirebaseAuthClient authClient)
     {
         InitializeComponent();
-        _authClient = authClient;
-        _firestoreDb = firestoreDb;
+        this._authClient = authClient;
+        this._persistenceStrategy = persistenceStrategy;
         CollectionHistorial.ItemsSource = Entradas;
 
         CargarHistorial();
@@ -33,53 +37,7 @@ public partial class Historial : ContentPage
             _todasLasEntradas.Clear();
             Entradas.Clear();
 
-#if ANDROID
-            // --- LÓGICA PARA ANDROID (Plugin Nativo) ---
-            var querySnapshot = await CrossCloudFirestore.Current
-                                        .Instance
-                                        .Collection("usuarios")
-                                        .Document(uid)
-                                        .Collection("entradas")
-                                        .OrderBy("fecha", descending: true)
-                                        .GetAsync();
-
-            foreach (var doc in querySnapshot.Documents)
-            {
-                var data = doc.Data;
-                var entry = new JournalEntry
-                {
-                    Id = doc.Id,
-                    Humor = data.ContainsKey("humor") ? data["humor"]?.ToString() : "indefinido",
-                    Contenido = data.ContainsKey("contenido") ? data["contenido"]?.ToString() : "",
-                    // El Plugin de Android devuelve las fechas directamente como DateTime o Timestamp nativo
-                    Fecha = data.ContainsKey("fecha") ? Convert.ToDateTime(data["fecha"]) : DateTime.Now
-                };
-                _todasLasEntradas.Add(entry);
-            }
-#else
-            // --- LÓGICA PARA WINDOWS (Google.Cloud.Firestore) ---
-            if (_firestoreDb != null)
-            {
-                Query query = _firestoreDb.Collection("usuarios").Document(uid)
-                                          .Collection("entradas")
-                                          .OrderByDescending("fecha");
-
-                QuerySnapshot snapshot = await query.GetSnapshotAsync();
-
-                foreach (DocumentSnapshot doc in snapshot.Documents)
-                {
-                    Dictionary<string, object> data = doc.ToDictionary();
-                    var entry = new JournalEntry
-                    {
-                        Id = doc.Id,
-                        Humor = data.ContainsKey("humor") ? data["humor"]?.ToString() : "indefinido",
-                        Contenido = data.ContainsKey("contenido") ? data["contenido"]?.ToString() : "",
-                        Fecha = data.ContainsKey("fecha") ? ((Timestamp)data["fecha"]).ToDateTime() : DateTime.Now
-                    };
-                    _todasLasEntradas.Add(entry);
-                }
-            }
-#endif
+            _todasLasEntradas = await _persistenceStrategy.GetJournalEntriesAsync(uid);
 
             CargarMesesEnPicker();
             ActualizarListaVisual(_todasLasEntradas);

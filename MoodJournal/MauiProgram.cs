@@ -1,80 +1,82 @@
-﻿using Microsoft.Extensions.Logging;
-using Firebase.Auth;
+﻿using Firebase.Auth;
 using Firebase.Auth.Providers;
 using Google.Cloud.Firestore;
-using Plugin.LocalNotification;
 using Microcharts.Maui;
+using Microsoft.Extensions.Logging;
 using Plugin.CloudFirestore;
+using Plugin.LocalNotification;
+using MoodJournal.Services;
 
+namespace MoodJournal;
 
-namespace MoodJournal
+public static class MauiProgram
 {
-    public static class MauiProgram
+    public static MauiApp CreateMauiApp()
     {
-        public static MauiApp CreateMauiApp()
-        {
-            var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>()
-                .UseMicrocharts()
-              
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp<App>()
+            .UseMicrocharts()
 
-            // ==========================================================
-            // CONFIGURACIÓN DE FIREBASE (AUTH & FIRESTORE)
-            // ==========================================================
-
-            // Define las constantes del proyecto
-            const string apiKey = "AIzaSyA521Rlu3USNVPRZMAVJY40bCQH6eNha8E";
-            const string projectId = "moodjournal-e3dff"; // ID del Proyecto Firebase
-            const string authDomain = "moodjournal-e3dff.firebaseapp.com";
-
-            // 1. REGISTRO de FirebaseAuthClient (Singleton)
-            // Esto permite que cualquier constructor pida FirebaseAuthClient.
-            builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
+            .ConfigureFonts(fonts =>
             {
-                ApiKey = apiKey,
-                AuthDomain = authDomain,
-                Providers = [new EmailProvider()]
-            }));
-
-            // 2. REGISTRO de FirestoreDb si es windows
-#if WINDOWS
-            builder.Services.AddSingleton<FirestoreDb>(sp =>
-            {
-                // Solo se ejecuta en PC
-                return FirestoreDb.Create(projectId);
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
+
+        // ==========================================================
+        // CONFIGURACIÓN DE FIREBASE (AUTH & FIRESTORE)
+        // ==========================================================
+
+        // Define las constantes del proyecto
+        const string apiKey = "AIzaSyA521Rlu3USNVPRZMAVJY40bCQH6eNha8E";
+        const string projectId = "moodjournal-e3dff"; // ID del Proyecto Firebase
+        const string authDomain = "moodjournal-e3dff.firebaseapp.com";
+
+        // 1. REGISTRO de FirebaseAuthClient (Singleton)
+        // Esto permite que cualquier constructor pida FirebaseAuthClient.
+        builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
+        {
+            ApiKey = apiKey,
+            AuthDomain = authDomain,
+            Providers = [new EmailProvider()]
+        }));
+
+        // 2. REGISTRO de FirestoreDb si es windows
+#if WINDOWS
+        builder.Services.AddSingleton<FirestoreDb>(sp =>
+        {
+            // Solo se ejecuta en PC
+            return FirestoreDb.Create(projectId);
+        });
+        builder.Services.AddSingleton<IPersistenceStrategy,WindowsPersistenceStrategy>();
+
 #elif ANDROID
-    // En Android usamos el CrossCloudFirestore del plugin nativo
-    builder.Services.AddSingleton<IFirestore>(sp => CrossCloudFirestore.Current.Instance);
+        // En Android usamos el CrossCloudFirestore del plugin nativo
+        builder.Services.AddSingleton<IFirestore>(sp => CrossCloudFirestore.Current.Instance);
+        builder.Services.AddSingleton<IPersistenceStrategy,AndroidPersistenceStrategy>();
 #endif
 
 
 
-            builder.Services.AddSingleton<INotificationService>(sp => LocalNotificationCenter.Current);
+        builder.Services.AddSingleton<INotificationService>(sp => LocalNotificationCenter.Current);
 
-            // 3. REGISTRO de Páginas para Inyección de Dependencias
-            // Esto permite que el constructor de la página Registro reciba las instancias de Firebase.
-            builder.Services.AddTransient<Registro>();
-            builder.Services.AddTransient<MoodJournal.Views.Home>();
-            builder.Services.AddTransient<MoodJournal.Views.MainPage>();
-            builder.Services.AddTransient<MoodJournal.Views.Estadisticas>();
-            builder.Services.AddTransient<MoodJournal.Views.Calendario>();
-            builder.Services.AddTransient<MoodJournal.Views.Ajustes>();
+        // 3. REGISTRO de Páginas para Inyección de Dependencias
+        // Esto permite que el constructor de la página Registro reciba las instancias de Firebase.
+        builder.Services.AddTransient<Registro>();
+        builder.Services.AddTransient<MoodJournal.Views.Home>();
+        builder.Services.AddTransient<MoodJournal.Views.MainPage>();
+        builder.Services.AddTransient<MoodJournal.Views.Estadisticas>();
+        builder.Services.AddTransient<MoodJournal.Views.Calendario>();
+        builder.Services.AddTransient<MoodJournal.Views.Ajustes>();
 
 
-            // ==========================================================
+        // ==========================================================
 
 #if DEBUG
-            builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
-            return builder.Build();
-        }
+        return builder.Build();
     }
 }
