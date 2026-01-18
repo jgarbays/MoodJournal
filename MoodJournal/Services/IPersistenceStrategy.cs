@@ -9,5 +9,7 @@ public interface IPersistenceStrategy
     Task UpdateProfileAsync(string uid, Dictionary<string, object> updates);
     Task UpdateProfilePhotoAsync(string uid, string downloadUrl);
 
-
+    Task CreateAccountAsync(string uid, Dictionary<string, object> userdata);   
+    Task DeleteAccountAsync(string uid);
+    Task UploadEntry(string uid, Dictionary<string, object> entry);
 }

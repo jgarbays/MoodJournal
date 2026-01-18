@@ -1,10 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\",
+  "WorkspaceRootPath": "C:\\Users\\D144837\\source\\repos\\MoodJournal\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\cristina\\desktop\\moodjournal\\moodjournal\\views\\home.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\views\\home.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\d144837\\source\\repos\\moodjournal\\moodjournal\\views\\entry.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\views\\entry.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\d144837\\source\\repos\\moodjournal\\moodjournal\\services\\windowspersistencestrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\services\\windowspersistencestrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\d144837\\source\\repos\\moodjournal\\moodjournal\\services\\ipersistencestrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\services\\ipersistencestrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|c:\\users\\d144837\\source\\repos\\moodjournal\\moodjournal\\services\\androidpersistencestrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B1C5548-B506-4E96-A5D2-9CF34930ABBA}|MoodJournal\\MoodJournal.csproj|solutionrelative:moodjournal\\services\\androidpersistencestrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,12 +26,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 7,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -30,19 +38,62 @@
             },
             {
               "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
               "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Home.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\Views\\Home.xaml.cs",
-              "RelativeDocumentMoniker": "MoodJournal\\Views\\Home.xaml.cs",
-              "ToolTip": "C:\\Users\\Cristina\\Desktop\\MoodJournal\\MoodJournal\\Views\\Home.xaml.cs",
-              "RelativeToolTip": "MoodJournal\\Views\\Home.xaml.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAYwDkAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "IPersistenceStrategy.cs",
+              "DocumentMoniker": "C:\\Users\\D144837\\source\\repos\\MoodJournal\\MoodJournal\\Services\\IPersistenceStrategy.cs",
+              "RelativeDocumentMoniker": "MoodJournal\\Services\\IPersistenceStrategy.cs",
+              "ToolTip": "C:\\Users\\D144837\\source\\repos\\MoodJournal\\MoodJournal\\Services\\IPersistenceStrategy.cs",
+              "RelativeToolTip": "MoodJournal\\Services\\IPersistenceStrategy.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAQwA0AAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-16T12:35:21.106Z",
+              "WhenOpened": "2026-01-18T17:18:51.069Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AndroidPersistenceStrategy.cs",
+              "DocumentMoniker": "C:\\Users\\D144837\\source\\repos\\MoodJournal\\MoodJournal\\Services\\AndroidPersistenceStrategy.cs",
+              "RelativeDocumentMoniker": "MoodJournal\\Services\\AndroidPersistenceStrategy.cs",
+              "ToolTip": "C:\\Users\\D144837\\source\\repos\\MoodJournal\\MoodJournal\\Services\\AndroidPersistenceStrategy.cs",
+              "RelativeToolTip": "MoodJournal\\Services\\AndroidPersistenceStrategy.cs",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAkwJQAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T19:15:06.934Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "WindowsPersistenceStrategy.cs",
+              "DocumentMoniker": "C:\\Users\\D144837\\source\\repos\\MoodJournal\\MoodJournal\\Services\\WindowsPersistenceStrategy.cs",
+              "RelativeDocumentMoniker": "MoodJournal\\Services\\WindowsPersistenceStrategy.cs",
+              "ToolTip": "C:\\Users\\D144837\\source\\repos\\MoodJournal\\MoodJournal\\Services\\WindowsPersistenceStrategy.cs",
+              "RelativeToolTip": "MoodJournal\\Services\\WindowsPersistenceStrategy.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAgwIQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-18T17:19:48.122Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "entry.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\D144837\\source\\repos\\MoodJournal\\MoodJournal\\Views\\entry.xaml.cs",
+              "RelativeDocumentMoniker": "MoodJournal\\Views\\entry.xaml.cs",
+              "ToolTip": "C:\\Users\\D144837\\source\\repos\\MoodJournal\\MoodJournal\\Views\\entry.xaml.cs",
+              "RelativeToolTip": "MoodJournal\\Views\\entry.xaml.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwBMAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-18T17:45:52.29Z",
               "EditorCaption": ""
             }
           ]

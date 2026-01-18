@@ -1,10 +1,9 @@
 ﻿using Firebase.Auth;
-using Google.Cloud.Firestore;
 using System.ComponentModel;
 using Plugin.LocalNotification;
-#if ANDROID
-using Plugin.CloudFirestore;
-#endif
+using MoodJournal.Services;
+
+
 
 
 namespace MoodJournal.Views;
@@ -12,14 +11,14 @@ namespace MoodJournal.Views;
 public partial class Ajustes : ContentPage
 {
     private readonly FirebaseAuthClient _authClient;
-    private readonly FirestoreDb _firestoreDb;
+    private readonly IPersistenceStrategy _persistenceStrategy; 
     private bool _isInitializing = true; // <--- VITAL: Bloquea eventos al arrancar
 
-    public Ajustes(FirebaseAuthClient authClient, FirestoreDb firestoreDb=null)
+    public Ajustes(FirebaseAuthClient authClient, IPersistenceStrategy persistenceStrategy)
     {
         InitializeComponent();
         _authClient = authClient;
-        _firestoreDb = firestoreDb;
+_persistenceStrategy = persistenceStrategy;
 
         _isInitializing = true;
 
@@ -210,15 +209,8 @@ public partial class Ajustes : ContentPage
 
 
                 // 2. Borrado de datos en Firestore (Lógica Híbrida)
-#if ANDROID
-                await CrossCloudFirestore.Current.Instance
-                    .Collection("usuarios").Document(user.Uid).DeleteAsync();
-#else
-                if (_firestoreDb != null)
-                {
-                    await _firestoreDb.Collection("usuarios").Document(user.Uid).DeleteAsync();
-                }
-#endif
+                
+                await _persistenceStrategy.DeleteAccountAsync(user.Uid);    
 
                 // 3. Borrar el usuario de Firebase Auth
                 await user.DeleteAsync();

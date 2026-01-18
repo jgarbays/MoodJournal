@@ -2,9 +2,8 @@ using Firebase.Auth;
 using Google.Cloud.Firestore;
 using System;
 using Microsoft.Maui.Controls;
-#if ANDROID
-using Plugin.CloudFirestore;
-#endif
+using MoodJournal.Services;
+
 
 namespace MoodJournal
 {
@@ -12,15 +11,16 @@ namespace MoodJournal
     {
         // 1. Variables de solo lectura para los servicios
         private readonly FirebaseAuthClient _firebaseAuthClient;
-        private readonly FirestoreDb _firestoreDb;
+        private readonly IPersistenceStrategy _persistenceStrategy;
 
         // 2. Constructor con Inyección de Dependencias
-        public Registro(FirebaseAuthClient authClient, FirestoreDb firestoreDb = null)
+        public Registro(FirebaseAuthClient authClient, IPersistenceStrategy persistenceStrategy)
         {
             InitializeComponent();
             _firebaseAuthClient = authClient;
-            _firestoreDb = firestoreDb;
-        }
+            _persistenceStrategy = persistenceStrategy;
+
+        } 
 
         // Método para el botón de Registro
         private async void OnRegisterButtonClicked(object sender, EventArgs e)
@@ -54,11 +54,7 @@ namespace MoodJournal
     { "fecha_registro", DateTime.UtcNow }
 };
 
-                DocumentReference docRef = _firestoreDb.Collection("usuarios").Document(userId);
-                await docRef.SetAsync(userData);
-
-                await DisplayAlert("¡Hola!", $"Registro exitoso para {name}.", "OK");
-
+              _persistenceStrategy.CreateAccountAsync(userId, userData);
                 // 5. Navegar a la Home (Usando // para limpiar el historial)
                 await Shell.Current.GoToAsync("//Home");
             }

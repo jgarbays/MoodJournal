@@ -100,4 +100,35 @@ public class WindowsPersistenceStrategy : IPersistenceStrategy
             await docRef.UpdateAsync("foto_url", downloadUrl);
         }
     }
+
+    public async Task DeleteAccountAsync(string uid)
+    {
+        if (_firestoreDb != null)
+        {
+            DocumentReference docRef =
+                _firestoreDb.Collection("usuarios").Document(uid);
+            await docRef.DeleteAsync();
+        }
+    }
+
+    public async Task CreateAccountAsync(string uid, Dictionary<string, object> userData)
+    {
+        if (_firestoreDb != null)
+        {
+            DocumentReference docRef =
+                _firestoreDb.Collection("usuarios").Document(uid);
+            await docRef.SetAsync(userData);
+        }
+    }
+
+    public async Task UploadEntry(string uid, Dictionary<string, object> entry)
+    {
+        if (_firestoreDb != null)
+        {
+            CollectionReference entriesRef =
+                _firestoreDb.Collection("usuarios").Document(uid)
+                            .Collection("entradas");
+            await entriesRef.AddAsync(entry);
+        }
+    }
 }

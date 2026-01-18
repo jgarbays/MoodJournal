@@ -1,24 +1,23 @@
 using Firebase.Auth;
 using Google.Cloud.Firestore;
 using Microsoft.Maui.Controls.Shapes;
+using MoodJournal.Services;
 
-#if ANDROID
-using Plugin.CloudFirestore;
-#endif
+
 
 namespace MoodJournal.Views;
 
 public partial class entry : ContentPage
 {
     private readonly FirebaseAuthClient _authClient;
-    private readonly FirestoreDb _firestoreDb;
-    private string _selectedMood = ""; // Para guardar el humor elegido
+    private readonly IPersistenceStrategy _persistenceStrategy;
+        private string _selectedMood = ""; // Para guardar el humor elegido
 
-    public entry(FirebaseAuthClient authClient, FirestoreDb firestoreDb = null)
+    public entry(FirebaseAuthClient authClient, IPersistenceStrategy persistenceStrategy)
     {
         InitializeComponent();
         _authClient = authClient;
-        _firestoreDb = firestoreDb;
+        _persistenceStrategy = persistenceStrategy;
     }
 
     // Método para seleccionar el humor
@@ -83,37 +82,8 @@ public partial class entry : ContentPage
             };
 
 
-            // 2. Ejecución condicional según plataforma
-#if ANDROID
-            // Lógica para ANDROID (Plugin nativo)
             
-            var bcd = CrossCloudFirestore.Current.Instance.Collection("usuarios").Document(uid)
-                                     .Collection("entradas");
-            await CrossCloudFirestore.Current
-                                     .Instance
-                                     .Collection("usuarios")
-                                     .Document(uid)
-                                     .Collection("entradas")
-                                     .AddAsync(nuevaEntrada);
-#else
-            // Lógica para WINDOWS (Google.Cloud.Firestore)
-            if (_firestoreDb != null)
-            {  //Se ha cambiado de FieldValue.ServerTimestamp a Google.Cloud.Firestore.FieldValue.ServerTimestamp para que reconozca que se trata de Google Cloud y no del Plugin de Android
-                nuevaEntrada.Add("timestamp", Google.Cloud.Firestore.FieldValue.ServerTimestamp);
-
-                CollectionReference entradasRef = _firestoreDb
-                    .Collection("usuarios")
-                    .Document(uid)
-                    .Collection("entradas");
-
-                await entradasRef.AddAsync(nuevaEntrada);
-            }
-            else
-            {
-                throw new Exception("La base de datos no está inicializada en Windows.");
-            }
-#endif
-
+        _persistenceStrategy.UploadEntry(uid, nuevaEntrada);
             await DisplayAlert("¡Guardado!", "Tu entrada de hoy se ha guardado correctamente.", "OK");
 
             // 3. Volver a la Home

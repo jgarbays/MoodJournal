@@ -1,10 +1,13 @@
-﻿using MoodJournal.Models;
+﻿using Firebase.Auth;
+using MoodJournal.Models;
 using Plugin.CloudFirestore;
 
 namespace MoodJournal.Services;
 
 public class AndroidPersistenceStrategy : IPersistenceStrategy
 {
+    private readonly object _authClient;
+
     public async Task<UserProfile> GetDataFromUserAsync(string userId)
     {
         var snapshot = await CrossCloudFirestore.Current
@@ -119,6 +122,31 @@ public class AndroidPersistenceStrategy : IPersistenceStrategy
         { "foto_url", downloadUrl } //Actualiza solo el campo que contiene la url de la foto
                        });
 
+    }
+
+    public async Task DeleteAccountAsync(string uid)
+    {
+        await CrossCloudFirestore.Current.Instance
+                       .Collection("usuarios").Document(uid).DeleteAsync();
+    }
+
+    public async Task CreateAccountAsync(string uid, Dictionary<string, object> userdata)
+    {
+        await CrossCloudFirestore.Current
+           .Instance
+           .Collection("usuarios")
+           .Document(uid)
+           .SetAsync(userdata);
+    }
+
+    public async Task UploadEntry(string uid, Dictionary<string, object> entry)
+    {
+        await CrossCloudFirestore.Current
+            .Instance
+            .Collection("usuarios")
+            .Document(uid)
+            .Collection("entradas")
+            .AddAsync(entry);
     }
 
 
