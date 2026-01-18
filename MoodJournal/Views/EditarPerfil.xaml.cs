@@ -1,21 +1,20 @@
 using Firebase.Auth;
-using Google.Cloud.Firestore;
-#if ANDROID
-using Plugin.CloudFirestore;
-#endif
+using MoodJournal.Services;
 
 namespace MoodJournal.Views;
 
 public partial class EditarPerfil : ContentPage
 {
-    private readonly FirestoreDb _firestoreDb;
+    private readonly IPersistenceStrategy _persistenceStrategy;
     private readonly FirebaseAuthClient _authClient;
 
-    public EditarPerfil(Dictionary<string, string> datos, FirestoreDb db, FirebaseAuthClient auth=null)
+
+    public EditarPerfil(Dictionary<string, string> datos, IPersistenceStrategy persistenceStrategy,  FirebaseAuthClient authClient
+)
     {
         InitializeComponent();
-        _firestoreDb = db;
-        _authClient = auth;
+_persistenceStrategy = persistenceStrategy;
+            _authClient = authClient;
 
         // Rellenamos los campos con los datos que ya tenemos
         EntryNombre.Text = datos["nombre"];
@@ -34,8 +33,6 @@ public partial class EditarPerfil : ContentPage
         try
         {
             string uid = _authClient.User.Uid;
-            DocumentReference docRef = _firestoreDb.Collection("usuarios").Document(uid);
-
             // Actualizamos solo los campos que cambiaron en Firestore
             Dictionary<string, object> actualizaciones = new Dictionary<string, object>
             {
@@ -44,39 +41,12 @@ public partial class EditarPerfil : ContentPage
                 { "fecha_nacimiento", PickerFecha.Date.ToString("dd - MM - yyyy") }
             };
 
-#if ANDROID
-            // =======================
-            // ANDROID (Plugin.CloudFirestore)
-            // =======================
 
-            // Accedemos a Firestore mediante el plugin nativo
-            await CrossCloudFirestore.Current
-                .Instance
-                .Collection("usuarios")
-                .Document(uid)
-                .UpdateAsync(actualizaciones);
-
-#else
-        // =======================
-        // WINDOWS (Google.Cloud.Firestore)
-        // =======================
-
-        if (_firestoreDb != null)
-        {
-            // Referencia al documento del usuario
-            DocumentReference docRefer =
-                _firestoreDb
-                    .Collection("usuarios")
-                    .Document(uid);
-
-            // Actualizamos los campos indicados en el diccionario
-            await docRef.UpdateAsync(actualizaciones);
-        }
-#endif
+            await _persistenceStrategy.UpdateProfileAsync(uid, actualizaciones);
             await DisplayAlert("Éxito", "Perfil actualizado correctamente", "OK");
 
             // Volvemos a la página anterior
-            await Navigation.PopAsync();
+            await Shell.Current.GoToAsync("///Perfil_tab");
         }
         catch (Exception ex)
         {

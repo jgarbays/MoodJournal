@@ -19,7 +19,7 @@
     <ShellContent
     Title="Perfil"
     ContentTemplate="{DataTemplate local:Perfil}"
-    Route="Perfil" />
+    Route="Perfil_tab" />
 
     <ShellContent
  Title="Historial"

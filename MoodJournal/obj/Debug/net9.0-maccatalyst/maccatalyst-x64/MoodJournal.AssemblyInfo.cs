@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MoodJournal")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+a06981c53779e75461170a7f6eaa00088012a4d2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+c203f2e77dd96a7e827265be6df2f4cce44b15d8")]
 [assembly: System.Reflection.AssemblyProductAttribute("MoodJournal")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MoodJournal")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

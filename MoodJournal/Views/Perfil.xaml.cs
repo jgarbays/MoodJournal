@@ -2,7 +2,13 @@ using Firebase.Auth;
 using Google.Cloud.Firestore;
 using System;
 using Microsoft.Maui.Controls;
+using MoodJournal.Models;
+using MoodJournal.Services;
 using Firebase.Storage;
+
+
+
+
 #if ANDROID
 using Plugin.CloudFirestore;
 #endif
@@ -13,13 +19,12 @@ namespace MoodJournal.Views
     {
         // 1. Servicios inyectados (Igual que en Registro)
         private readonly FirebaseAuthClient _firebaseAuthClient;
-        private readonly FirestoreDb _firestoreDb;
-
-        public Perfil(FirebaseAuthClient authClient, FirestoreDb firestoreDb = null)
+        private readonly IPersistenceStrategy _persistenceStrategy;
+        public Perfil(FirebaseAuthClient authClient, IPersistenceStrategy persistenceStrategy)
         {
             InitializeComponent();
             _firebaseAuthClient = authClient;
-            _firestoreDb = firestoreDb;
+           _persistenceStrategy = persistenceStrategy;
 
             // Al cargar la página, recuperamos los datos
             CargarDatosUsuario();
@@ -36,112 +41,21 @@ namespace MoodJournal.Views
         {
             try
             {
+                string uid = _firebaseAuthClient.User.Uid;
+                UserProfile profile = await _persistenceStrategy.GetDataFromUserAsync(uid);
 
-                // Obtenemos el usuario actual de Firebase Auth
-                var user = _firebaseAuthClient.User;
 
-                if (user != null)
+                if (profile != null)
                 {
-                    string userId = user.Uid;
+                    NombreLabel.Text = profile.nombre_usuario ?? "Usuario";
+                    EmailLabel.Text = profile.email ?? "No definido";
+                    TelefonoLabel.Text = profile.telefono ?? "No definido";
+                    FechaNacimientoLabel.Text = profile.fecha_nacimiento ?? "No definido";
 
-#if ANDROID
-                    // =======================
-                    // ANDROID
-                    // =======================
-
-                    // Accedemos a Firestore usando el plugin nativo
-                    var snapshot = await CrossCloudFirestore.Current
-                                            .Instance
-                                            .Collection("usuarios")   // Colección usuarios
-                                            .Document(userId)         // Documento del usuario
-                                            .GetAsync();              // Obtenemos el documento
-
-                    // Verificamos que el documento existe
-                    if (snapshot.Exists)
-                    {
-                        // Diccionario con los datos del usuario
-                        var userData = snapshot.Data;
-
-                        // Nombre del usuario
-                        NombreLabel.Text = userData.ContainsKey("nombre_usuario")
-                            ? userData["nombre_usuario"]?.ToString()
-                            : "Usuario";
-
-                        // Email (Firestore o Auth como respaldo)
-                        EmailLabel.Text = userData.ContainsKey("email")
-                            ? userData["email"]?.ToString()
-                            : user.Info.Email;
-
-                        // Teléfono
-                        TelefonoLabel.Text = userData.ContainsKey("telefono")
-                            ? userData["telefono"]?.ToString()
-                            : "No definido";
-
-                        // Fecha de nacimiento
-                        FechaNacimientoLabel.Text = userData.ContainsKey("fecha_nacimiento")
-                            ? userData["fecha_nacimiento"]?.ToString()
-                            : "No definido";
-
-                        // Foto de perfil (URL)
-                        if (userData.ContainsKey("foto_url"))
-                        {
-                            ProfileImage.Source = userData["foto_url"]?.ToString();
-                        }
-                    }
-
-#else
-                // =======================
-                // WINDOWS
-                // =======================
-
-                // Nos aseguramos de que Firestore esté disponible
-                if (_firestoreDb != null)
-                {
-                    // Referencia al documento del usuario
-                    DocumentReference docRef =
-                        _firestoreDb.Collection("usuarios")
-                                    .Document(userId);
-
-                    // Obtenemos el documento desde Firestore
-                    DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
-
-                    // Verificamos que el documento existe
-                    if (snapshot.Exists)
-                    {
-                        // Convertimos el documento a diccionario
-                        Dictionary<string, object> userData =
-                            snapshot.ToDictionary();
-
-                        // Nombre del usuario
-                        NombreLabel.Text = userData.ContainsKey("nombre_usuario")
-                            ? userData["nombre_usuario"]?.ToString()
-                            : "Usuario";
-
-                        // Email
-                        EmailLabel.Text = userData.ContainsKey("email")
-                            ? userData["email"]?.ToString()
-                            : user.Info.Email;
-
-                        // Teléfono
-                        TelefonoLabel.Text = userData.ContainsKey("telefono")
-                            ? userData["telefono"]?.ToString()
-                            : "No definido";
-
-                        // Fecha de nacimiento
-                        FechaNacimientoLabel.Text = userData.ContainsKey("fecha_nacimiento")
-                            ? userData["fecha_nacimiento"]?.ToString()
-                            : "No definido";
-
-                        // Foto de perfil
-                        if (userData.ContainsKey("foto_url"))
-                        {
-                            ProfileImage.Source =
-                                userData["foto_url"]?.ToString();
-                        }
-                    }
+                    if (!string.IsNullOrEmpty(profile.foto_url))
+                        ProfileImage.Source = profile.foto_url;
                 }
-#endif
-                }
+           
             }
             catch (Exception ex)
             {
@@ -168,7 +82,7 @@ namespace MoodJournal.Views
 
             // Navegamos a la página de edición
             // Usamos Navigation.PushAsync para que pueda volver con el botón de atrás
-            await Navigation.PushAsync(new EditarPerfil(datosActuales, _firestoreDb, _firebaseAuthClient));
+            await Navigation.PushAsync(new EditarPerfil(datosActuales, _persistenceStrategy, _firebaseAuthClient));
         }
         // Método para cambiar la foto 
         private async void OnCambiarFotoClicked(object sender, EventArgs e)
@@ -196,28 +110,8 @@ namespace MoodJournal.Views
 
                     // 5. Actualizar Firestore con la nueva URL
                     string uid = _firebaseAuthClient.User.Uid; // Obtiene el ID del usuario
-#if ANDROID
-                    // --- ANDROID (Plugin.CloudFirestore) ---
-                    // Acceder a la instancia del plugin nativo
-                    await CrossCloudFirestore.Current
-                        .Instance
-                        .Collection("usuarios")
-                        .Document(uid)
-                        //Recibe un diccionario de campos
-                        .UpdateAsync(new Dictionary<string, object>
-                        {
-        { "foto_url", downloadUrl } //Actualiza solo el campo que contiene la url de la foto
-                        });
-#else
-// --- WINDOWS (Google.Cloud.Firestore) ---
-if (_firestoreDb != null)
-{   //Creamos referencia al documento de usuario
-    DocumentReference docRef =
-        _firestoreDb.Collection("usuarios").Document(uid);
-    //Actualizamos el campo de la url de la foto de este documento con la nueva url
-    await docRef.UpdateAsync("foto_url", downloadUrl);
-}
-#endif
+                    await _persistenceStrategy.UpdateProfilePhotoAsync(uid, downloadUrl);
+
                 }
             }
             catch (Exception ex)

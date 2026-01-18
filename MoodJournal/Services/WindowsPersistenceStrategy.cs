@@ -12,11 +12,49 @@ public class WindowsPersistenceStrategy : IPersistenceStrategy
     }
 
 
-    public Task<UserProfile> GetDataFromUserAsync(string userUid)
+    public async Task<UserProfile> GetDataFromUserAsync(string userUid)
     {
-        throw new NotImplementedException();
-    }
+        if (_firestoreDb == null)
+            return null;
 
+        DocumentReference docRef = _firestoreDb
+            .Collection("usuarios")
+            .Document(userUid);
+
+        DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+
+        if (!snapshot.Exists)
+            return null;
+
+        Dictionary<string, object> userData = snapshot.ToDictionary();
+
+        UserProfile userProfile = new UserProfile
+        {
+            Uid = userUid,
+
+            nombre_usuario = userData.ContainsKey("nombre_usuario")
+                ? userData["nombre_usuario"]?.ToString()
+                : null,
+
+            email = userData.ContainsKey("email")
+                ? userData["email"]?.ToString()
+                : null,
+
+            telefono = userData.ContainsKey("telefono")
+                ? userData["telefono"]?.ToString()
+                : null,
+
+            fecha_nacimiento = userData.ContainsKey("fecha_nacimiento")
+                ? userData["fecha_nacimiento"]?.ToString()
+                : null,
+
+            foto_url = userData.ContainsKey("foto_url")
+                ? userData["foto_url"]?.ToString()
+                : null
+        };
+
+        return userProfile;
+    }
 
     public async Task<List<JournalEntry>> GetJournalEntriesAsync(string uid)
     {
@@ -41,5 +79,25 @@ public class WindowsPersistenceStrategy : IPersistenceStrategy
             _todasLasEntradas.Add(entry);
         }
         return _todasLasEntradas;
+    }
+
+    public async Task UpdateProfileAsync(string uid, Dictionary<string, object> updates)
+    {
+        DocumentReference docRef = _firestoreDb
+            .Collection("usuarios")
+            .Document(uid);
+
+        await docRef.UpdateAsync(updates);
+    }
+
+    public async Task UpdateProfilePhotoAsync(string uid, string downloadUrl)
+    {
+        if (_firestoreDb != null)
+        {   //Creamos referencia al documento de usuario
+            DocumentReference docRef =
+                _firestoreDb.Collection("usuarios").Document(uid);
+            //Actualizamos el campo de la url de la foto de este documento con la nueva url
+            await docRef.UpdateAsync("foto_url", downloadUrl);
+        }
     }
 }

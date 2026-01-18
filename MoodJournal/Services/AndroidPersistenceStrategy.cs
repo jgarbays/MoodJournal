@@ -5,9 +5,45 @@ namespace MoodJournal.Services;
 
 public class AndroidPersistenceStrategy : IPersistenceStrategy
 {
-    public Task<UserProfile> GetDataFromUserAsync(string userUid)
+    public async Task<UserProfile> GetDataFromUserAsync(string userId)
     {
-        throw new NotImplementedException();
+        var snapshot = await CrossCloudFirestore.Current
+            .Instance
+            .Collection("usuarios")
+            .Document(userId)
+            .GetAsync();
+
+        if (!snapshot.Exists)
+            return null;
+
+        var userData = snapshot.Data;
+
+        UserProfile profile = new UserProfile
+        {
+            Uid = userId,
+
+            nombre_usuario = userData.ContainsKey("nombre_usuario")
+                ? userData["nombre_usuario"]?.ToString()
+                : null,
+
+            email = userData.ContainsKey("email")
+                ? userData["email"]?.ToString()
+                : null,
+
+            telefono = userData.ContainsKey("telefono")
+                ? userData["telefono"]?.ToString()
+                : null,
+
+            fecha_nacimiento = userData.ContainsKey("fecha_nacimiento")
+                ? userData["fecha_nacimiento"]?.ToString()
+                : null,
+
+            foto_url = userData.ContainsKey("foto_url")
+                ? userData["foto_url"]?.ToString()
+                : null
+        };
+
+        return profile;
     }
 
     public async Task<List<JournalEntry>> GetJournalEntriesAsync(string uid)
@@ -60,4 +96,31 @@ public class AndroidPersistenceStrategy : IPersistenceStrategy
         }
         return entries;
     }
+
+    public async Task UpdateProfileAsync(string uid, Dictionary<string, object> updates)
+    {
+    
+        await CrossCloudFirestore.Current
+            .Instance
+            .Collection("usuarios")
+            .Document(uid)
+            .UpdateAsync(updates);
+    }
+
+    public async Task UpdateProfilePhotoAsync(string uid, string downloadUrl)
+    {
+        await CrossCloudFirestore.Current
+                       .Instance
+                       .Collection("usuarios")
+                       .Document(uid)
+                       //Recibe un diccionario de campos
+                       .UpdateAsync(new Dictionary<string, object>
+                       {
+        { "foto_url", downloadUrl } //Actualiza solo el campo que contiene la url de la foto
+                       });
+
+    }
+
+
 }
+
